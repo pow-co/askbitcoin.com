@@ -10,7 +10,6 @@ const handleBoost = async (e) => {
   e.stopPropagation()
   e.preventDefault()
 
-  return
 
   const value = 0.05
   const currency="USD"
