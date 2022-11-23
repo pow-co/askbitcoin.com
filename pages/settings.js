@@ -45,7 +45,7 @@ export default function Settings() {
             </p>
             <TuningPanel />
           </div>
-          <div
+          {/* <div
             onClick={() => setWalletPopupOpen(true)}
             className="bg-gray-100 dark:bg-gray-600 p-5 flex items-center h-[78px] cursor-pointer my-4 rounded-lg"
           >
@@ -72,7 +72,7 @@ export default function Settings() {
                 d="M9 5l7 7-7 7"
               />
             </svg>
-          </div>
+          </div> */}
           <div className="bg-gray-100 dark:bg-gray-600 p-5 flex items-center h-[78px] cursor-pointer my-4 rounded-lg">
             <div className="flex flex-col">
               <p className="text-base font-semibold my-0.5 text-gray-700 dark:text-white">
