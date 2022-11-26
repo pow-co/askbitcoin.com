@@ -11,6 +11,8 @@ import { useEffect } from 'react'
 const DetailPostCard = ({ post }) => {
     const router = useRouter();
 
+    const zenMode = true;
+
   const navigate = (e) => {
     e.stopPropagation();
     if(post.answers){
@@ -30,7 +32,7 @@ const DetailPostCard = ({ post }) => {
       <div onClick={navigate}  className='grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg'>
         <div className='col-span-12'>
           <div className='mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer'>
-            <div className='col-span-1'>
+            {!zenMode && <div className='col-span-1'>
               {/* <Link  href={`/u/${post.userId}`}>
                 <a onClick={(e)=>e.stopPropagation()}>
                   <UserIcon src={post.userByUserId.icon} size={46}/>
@@ -39,7 +41,7 @@ const DetailPostCard = ({ post }) => {
               <a>
               <UserIcon src={`https://bitpic.network/u/0`} size={46}/>
               </a>
-            </div>
+            </div>}
             <div className='col-span-11 ml-6'>
               <div className='flex'>
                 {/* <Link  href={`/u/${post.userId}`}>
@@ -47,9 +49,10 @@ const DetailPostCard = ({ post }) => {
                     {post.userByUserId.name}<span className='ml-1 font-normal text-gray-500 dark:text-gray-300'>@{post.userId}</span>
                   </div>
                 </Link> */}
-                <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
+               {!zenMode &&  <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
                     1anon
                   </div>
+                  }
                 <div className='grow'/>
                 <a target="_blank" rel="noreferrer" href={`https://whatsonchain.com/tx/${post.tx_id}`} className='text-xs leading-5 whitespace-nowrap text-gray-500 dark:text-gray-300 hover:text-gray-700 hover:dark:text-gray-500'>
                   {moment(post.createdAt).fromNow()}
@@ -78,7 +81,7 @@ const DetailPostCard = ({ post }) => {
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
               <div className='ml-1'>
                 <div className='grid grid-cols-12 gap-4 w-full'>
-                  <div className='col-span-5'/>
+                  <div className='col-span-8'/>
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <div onClick={handleLike}>
                       <svg
@@ -106,7 +109,7 @@ const DetailPostCard = ({ post }) => {
                       0{post.numLikes}
                     </p>
                   </div> */}
-                  <div className='col-span-3 flex group items-center w-fit relative'>
+                  <div className='col-span-2 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"
                       fill="none"
@@ -118,9 +121,9 @@ const DetailPostCard = ({ post }) => {
                         d="M16.7698 26.04L16.7796 26.0214C16.8013 25.98 16.8245 25.9351 16.8491 25.8873C17.03 25.5371 17.2911 25.0314 17.6274 24.6275C18.0608 24.1068 18.7281 23.6137 19.6907 23.6137C22.7525 23.6137 24.8033 23.173 26.0492 22.4503C27.1805 21.794 27.7035 20.8819 27.7035 19.5258C27.7035 16.3261 24.3811 13.2965 19.6907 13.2965C15.2771 13.2965 12.2965 16.1275 12.2965 19.5258C12.2965 20.3629 12.6319 22.2529 13.4911 23.5026L13.4978 23.5125L13.4978 23.5125C14.3586 24.7897 15.3301 25.7902 16.4883 26.5864C16.5026 26.5622 16.5179 26.5356 16.5341 26.5064C16.6042 26.3801 16.6748 26.2365 16.7606 26.059L16.7698 26.04ZM17.9278 26.6233C17.9537 26.574 17.9795 26.5244 18.0053 26.4748C18.4108 25.6944 18.8183 24.9101 19.6907 24.9101C25.9691 24.9101 29 23.1358 29 19.5258C29 15.3652 24.8247 12 19.6907 12C14.7423 12 11 15.2428 11 19.5258C11 20.5354 11.3711 22.7075 12.4227 24.2371C13.4124 25.7055 14.5567 26.8681 15.9485 27.7858C16.1649 27.9388 16.3814 28 16.5979 28C17.2474 28 17.5876 27.327 17.9278 26.6233Z"
                       ></path>
                     </svg>
-                    <p className="text-gray-500 dark:text-gray-300 group-hover:text-green-500">
+                    {!zenMode && <p className="text-gray-500 dark:text-gray-300 group-hover:text-green-500">
                         {post.answers !== undefined && post.answers.length}
-                      </p>
+                      </p>}
                   </div>
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <svg
@@ -151,7 +154,7 @@ const DetailPostCard = ({ post }) => {
                       {post.numBranches}
                     </p>
                   </div> */}
-                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : 0}/>
+                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : 0} zenMode={zenMode}/>
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"
