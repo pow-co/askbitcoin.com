@@ -92,6 +92,10 @@ const Composer = ({ reply_tx, successAction }) => {
       console.log(resp);
       setValue(blankSlateValue)
 
+      if(!resp){
+        return
+      }
+
       let rawTx = resp.rawTx || resp.rawtx;
       let txid = resp.txid;
 

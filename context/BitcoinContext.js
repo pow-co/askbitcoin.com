@@ -103,8 +103,12 @@ const BitcoinProvider = (props) => {
               sats: 2180,
             },
           ];
-          resp = await twetchSend(outputs);
-          return resp;
+          try {
+            resp = await twetchSend(outputs);
+            return resp;
+          } catch (error) {
+            throw new Error(error);
+          }
         case "relayx":
           outputs = {
             opReturn,
@@ -112,8 +116,13 @@ const BitcoinProvider = (props) => {
             amount: 0.02,
             to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
           };
-          resp = await relaySend(outputs);
-          return resp;
+          try {
+            resp = await relaySend(outputs);
+            return resp;
+          } catch (error) {
+            console.log("here");
+            throw new Error(error);
+          }
         default:
           console.log("no wallet selected");
           return null;

@@ -130,15 +130,15 @@ const RelayProvider = (props) => {
 
   const relaySend = useCallback(
     async (outputs) => {
-      console.log("relay.send.outputs", outputs);
-      if (relayOne) {
-        try {
+      try {
+        console.log("relay.send.outputs", outputs);
+        if (relayOne) {
           let result = await relayOne.send(outputs);
           return result;
-        } catch (error) {
-          console.log("relayx.send.error", outputs, error);
-          throw new Error(error);
         }
+      } catch (error) {
+        console.log("relayx.send.error", outputs, error);
+        throw new Error(error);
       }
     },
     [relayOne]
