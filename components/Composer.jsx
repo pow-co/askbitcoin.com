@@ -23,9 +23,44 @@ import { PostCard } from '.';
 import { useBitcoin } from '../context/BitcoinContext';
 
 
+const SuccessSnackbar = (props) => {
+  return (<div
+    className="mx-2 sm:mx-auto max-w-sm  flex flex-row items-center justify-between bg-green-200 p-3 text-sm leading-none font-medium rounded-xl whitespace-no-wrap">
+    <div className="inline-flex items-center text-green-500">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clipRule="evenodd" />
+      </svg>
+      Transaction successful!
+    </div>
+    <div className="text-green-700 cursor-pointer hover:text-green-800">
+      <a target="_blank" rel="noreferrer" href={`https://whatsonchain.com/tx/${props.tx_id}`}>View</a>
+    </div>
+  </div>)
+}
+
+const ErrorSnackbar = (props) => {
+  return (
+    <div
+      className="mx-2 sm:mx-auto max-w-sm  flex flex-row items-center justify-between bg-red-200 p-3 text-sm leading-none font-medium rounded-xl whitespace-no-wrap">
+      <div className="inline-flex items-center text-red-500">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clipRule="evenodd" />
+        </svg>
+        {props.message}
+      </div>
+    </div>
+  )
+}
+
+
 
 
 const Composer = ({ reply_tx, successAction }) => {
+  const { relayOne } = useRelay()
     const router = useRouter()
     const [twetchPost, setTwetchPost] = useState()
     const [placeholder, setPlaceholder] = useState("What's the latest?")
@@ -70,14 +105,48 @@ const Composer = ({ reply_tx, successAction }) => {
     const handlePost = async (e) => {
       e.preventDefault()
       const content = serialize(editor.children)
+      let opReturn;
+      if (reply_tx) {
+        opReturn = [
+          "onchain",
+          "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
+          "answer",
+          JSON.stringify({
+            question_tx_id: reply_tx,
+            content,
+          }),
+        ];
+      } else {
+        opReturn = [
+          "onchain",
+          "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
+          "question",
+          JSON.stringify({
+            content,
+          }),
+        ];
+      }
+
+      const outputs = {
+        opReturn,
+        currency: "BSV",
+        amount: 0.00052,
+        to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
+      };
     
-      let resp = await toast.promise(send(content, reply_tx), {
+      let { txid,rawTx } = await toast.promise(relayOne.send(outputs), {
         pending: 'Transaction is pending 🚀',
-        success: 'Transaction successful 🥳',
+        success: {
+          render({data}){
+            return <SuccessSnackbar tx_id={data.txid}/>
+          },
+          icon:false
+        },
         error: {
           render({data}){
-            return `${data}`
-          }
+            return <ErrorSnackbar message={data.message}/>
+          },
+          icon:false
         }
       }, {
       position: "top-center",
@@ -89,16 +158,11 @@ const Composer = ({ reply_tx, successAction }) => {
       progress: undefined,
       theme: "light",
       });
-      console.log(resp);
       setValue(blankSlateValue)
 
-      if(!resp){
+      if(!txid && !rawTx){
         return
-      } 
-
-      let rawTx = resp.rawTx || resp.rawtx;
-      let txid = resp.txid;
-
+      }
       (async () => {
         try {
           let { data: postTransactionResponse } = await axios.post('https://askbitcoin.ai/api/v1/transactions', {

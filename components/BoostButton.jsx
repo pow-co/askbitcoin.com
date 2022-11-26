@@ -3,8 +3,72 @@ import { toast } from 'react-toastify'
 import { useBitcoin } from '../context/BitcoinContext'
 import axios from 'axios'
 
+import { wrapRelayx } from 'stag-relayx'
+import { useRelay } from '../context/RelayContext'
+
+
+const SuccessSnackbar = (props) => {
+  return (<div
+    className="mx-2 sm:mx-auto max-w-sm  flex flex-row items-center justify-between bg-green-200 p-3 text-sm leading-none font-medium rounded-xl whitespace-no-wrap">
+    <div class="inline-flex items-center text-green-500">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clipRule="evenodd" />
+      </svg>
+      Bought {props.difficulty} difficulty
+    </div>
+    <div className="text-green-700 cursor-pointer hover:text-green-800">
+      <a target="_blank" rel="noreferrer" href={`https://whatsonchain.com/tx/${props.tx_id}`}>View</a>
+    </div>
+  </div>)
+}
+
+const ErrorSnackbar = (props) => {
+  console.log(props)
+  return (
+    <div
+      className="mx-2 sm:mx-auto max-w-sm  flex flex-row items-center justify-between bg-red-200 p-3 text-sm leading-none font-medium rounded-xl whitespace-no-wrap">
+      <div className="inline-flex items-center text-red-500">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clipRule="evenodd" />
+        </svg>
+        {props.message}
+      </div>
+    </div>
+  )
+}
+
 const BoostButton = ({ tx_id, difficulty }) => {
-  const { boost } = useBitcoin()
+  const { relayOne } = useRelay()
+  //const { boost } = useBitcoin()
+const boost = async (contentTxid) => {
+  const stag = wrapRelayx(relayOne)
+  const {txid, txhex, job} = await stag.boost.buy({
+    content: contentTxid,
+    value: 124_000,
+    difficulty: 0.025
+  })
+  relayOne.send({
+    currency: 'BSV',
+    amount: 0.00052,
+    to: '1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ' // askbitcoin.ai revenue address
+  })
+  .then(result => {
+    console.log('relayone.send.reward.result', result)
+  })
+  .catch(error => {
+    console.log('relayone.send.reward.error', error)
+  })
+
+  return {txid, txhex, job}
+  
+  
+}
+
+
 
 const handleBoost = async (e) => {
   e.stopPropagation()
@@ -16,15 +80,20 @@ const handleBoost = async (e) => {
 
   
 
-    try {
 
-      let result = await toast.promise(boost(tx_id, value, currency), {
+      let {txid, txhex, job} = await toast.promise(boost(tx_id), {
         pending: 'Transaction is pending 🚀',
-        success: 'Transaction successful 🥳',
+        success: {
+          render({data}){
+            return <SuccessSnackbar difficulty={data.job.difficulty} tx_id={data.txid}/>
+          },
+          icon:false
+        },
         error: {
           render({data}){
-            return `${data}`
-          }
+            return <ErrorSnackbar message={data.message}/>
+          },
+          icon:false
         }
       }, {
       position: "top-center",
@@ -37,36 +106,7 @@ const handleBoost = async (e) => {
       theme: "light",
       })
 
-      console.log('bitcoin.boost.result', result);
-
-      const { txid } = result;
-
-      console.log('TXID', txid);
-
-      // Post the new boostpow job transaction to the indexer API at pow.co
-      axios
-        .get(`https://pow.co/api/v1/boost/jobs/${txid}`)
-        .then(({ data }) => {
-          console.log(`pow.co/api/v1/jobs/${result.txid}.result`, data);
-         })
-        .catch((error) => {
-          console.error(`pow.co/api/v1/jobs/${result.txid}`, error);
-        });
-
-      axios
-        .post(`https://pow.co/api/v1/boost/jobs`, {
-          transaction: result.rawTx
-        })
-        .then(({ data }) => {
-          console.log(`post.pow.co/api/v1/jobs.result`, data);
-        })
-        .catch((error) => {
-          console.error(`post.pow.co/api/v1/jobs`, error);
-        });
-        console.log('relay.quote', result);
-    } catch (error){
-      console.error('useBitcoin.boost.error', error);
-    }
+      console.log('bitcoin.boost.result', {txid, txhex,job});
 }
   return (
     <div onClick={handleBoost} className='col-span-4 flex group items-center w-fit relative '>
