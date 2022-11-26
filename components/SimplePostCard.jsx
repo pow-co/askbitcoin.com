@@ -1,59 +1,68 @@
-import React from 'react'
-import { UserIcon, PostDescription, PostMedia } from '.'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import moment from 'moment'
-import likeTwetch from '../services/twetch/like-twetch'
-import BoostButton from './BoostButton'
-import { useEffect } from 'react'
-
+import React from "react";
+import { UserIcon, PostDescription, PostMedia } from ".";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import moment from "moment";
+import likeTwetch from "../services/twetch/like-twetch";
+import BoostButton from "./BoostButton";
+import { useEffect } from "react";
 
 const SimplePostCard = ({ post }) => {
-    const router = useRouter();
-    const zenMode = true;
+  const router = useRouter();
+  const zenMode = true;
 
   const navigate = (e) => {
     e.stopPropagation();
-    if(post.answers){
-      router.push(`/questions/${post.tx_id}`)
+    if (post.answers) {
+      router.push(`/questions/${post.tx_id}`);
     } else {
-      router.push(`/answers/${post.tx_id}`)
+      router.push(`/answers/${post.tx_id}`);
     }
-  } 
+  };
 
-  const handleLike = (e) => {
-
-  }
-  if (!post){
-    return <></>
+  const handleLike = (e) => {};
+  if (!post) {
+    return <></>;
   } else {
-  return (
-      <div onClick={navigate}  className='grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg'>
-        <div className='col-span-12'>
-          <div className='mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer'>
-            {!zenMode && <div className='col-span-1'>
-              {/* <Link  href={`/u/${post.userId}`}>
+    return (
+      <div
+        onClick={navigate}
+        className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg"
+      >
+        <div className="col-span-12">
+          <div className="mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer">
+            {!zenMode && (
+              <div className="col-span-1">
+                {/* <Link  href={`/u/${post.userId}`}>
                 <a onClick={(e)=>e.stopPropagation()}>
                   <UserIcon src={post.userByUserId.icon} size={46}/>
                 </a>
               </Link> */}
-              <a>
-              <UserIcon src={`https://bitpic.network/u/0`} size={46}/>
-              </a>
-            </div>}
-            <div className='col-span-12 ml-6'>
-               <div className='flex'>
+                <a>
+                  <UserIcon src={`https://bitpic.network/u/0`} size={46} />
+                </a>
+              </div>
+            )}
+            <div className={`col-span-${zenMode ? 12 : 11} ml-6`}>
+              {!zenMode && <div className="flex">
                 {/* <Link  href={`/u/${post.userId}`}>
                   <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
                     {post.userByUserId.name}<span className='ml-1 font-normal text-gray-500 dark:text-gray-300'>@{post.userId}</span>
                   </div>
                 </Link> */}
-
-                {!zenMode && <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline"
+                  >
                     1anon
-                  </div>}
-                <div className='grow'/>
-                <a target="_blank" rel="noreferrer" href={`https://whatsonchain.com/tx/${post.tx_id}`} className='text-xs leading-5 whitespace-nowrap text-gray-500 dark:text-gray-300 hover:text-gray-700 hover:dark:text-gray-500'>
+                  </div>
+                <div className="grow" />
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`https://whatsonchain.com/tx/${post.tx_id}`}
+                  className="text-xs leading-5 whitespace-nowrap text-gray-500 dark:text-gray-300 hover:text-gray-700 hover:dark:text-gray-500"
+                >
                   {moment(post.createdAt).fromNow()}
                 </a>
                 {/* <a href={`https://twetch.com/t/${post.tx_id}`} target="_blank" rel="noreferrer" onClick={(e)=>e.stopPropagation()}>
@@ -66,20 +75,24 @@ const SimplePostCard = ({ post }) => {
                     </svg>
                   </div>
                 </a> */}
-              </div>
+              </div>}
               {post.question !== undefined && (
-                <div onClick={(e) => {
-                  e.stopPropagation()
-                  router.push(`/questions/${post.question.tx_id}`)}} className='cursor-pointer relative flex flex-col bg-gray-300 dark:bg-gray-700 m-4 p-4 border-l-4 border-gray-500 '>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/questions/${post.question.tx_id}`);
+                  }}
+                  className="cursor-pointer relative flex flex-col bg-gray-300 dark:bg-gray-700 m-4 p-4 border-l-4 border-gray-500 "
+                >
                   {/* <span className='w-9 h-9 flex items-center justify-center text-center absolute -top-4 -left-4 rounded-full bg-gray-100 dark:bg-gray-600'>🧩</span> */}
-                  <PostDescription bContent={post.question.content}/>
+                  <PostDescription bContent={post.question.content} />
                 </div>
               )}
-              <PostDescription bContent={post.content}/>
+              <PostDescription bContent={post.content} />
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
-              <div className='ml-1'>
-                <div className='grid grid-cols-12 gap-4 w-full'>
-                  <div className='col-span-8'/>
+              <div className="ml-1">
+                <div className="grid grid-cols-12 gap-4 w-full">
+                  <div className={`col-span-${zenMode ? 8 : 5}`} />
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <div onClick={handleLike}>
                       <svg
@@ -107,7 +120,7 @@ const SimplePostCard = ({ post }) => {
                       0{post.numLikes}
                     </p>
                   </div> */}
-                  <div className='col-span-2 flex group items-center w-fit relative'>
+                  <div className={`col-span-${zenMode ? 2 : 3} flex group items-center w-fit relative`}>
                     <svg
                       viewBox="0 0 40 40"
                       fill="none"
@@ -119,40 +132,17 @@ const SimplePostCard = ({ post }) => {
                         d="M16.7698 26.04L16.7796 26.0214C16.8013 25.98 16.8245 25.9351 16.8491 25.8873C17.03 25.5371 17.2911 25.0314 17.6274 24.6275C18.0608 24.1068 18.7281 23.6137 19.6907 23.6137C22.7525 23.6137 24.8033 23.173 26.0492 22.4503C27.1805 21.794 27.7035 20.8819 27.7035 19.5258C27.7035 16.3261 24.3811 13.2965 19.6907 13.2965C15.2771 13.2965 12.2965 16.1275 12.2965 19.5258C12.2965 20.3629 12.6319 22.2529 13.4911 23.5026L13.4978 23.5125L13.4978 23.5125C14.3586 24.7897 15.3301 25.7902 16.4883 26.5864C16.5026 26.5622 16.5179 26.5356 16.5341 26.5064C16.6042 26.3801 16.6748 26.2365 16.7606 26.059L16.7698 26.04ZM17.9278 26.6233C17.9537 26.574 17.9795 26.5244 18.0053 26.4748C18.4108 25.6944 18.8183 24.9101 19.6907 24.9101C25.9691 24.9101 29 23.1358 29 19.5258C29 15.3652 24.8247 12 19.6907 12C14.7423 12 11 15.2428 11 19.5258C11 20.5354 11.3711 22.7075 12.4227 24.2371C13.4124 25.7055 14.5567 26.8681 15.9485 27.7858C16.1649 27.9388 16.3814 28 16.5979 28C17.2474 28 17.5876 27.327 17.9278 26.6233Z"
                       ></path>
                     </svg>
-                    <p className="text-gray-500 dark:text-gray-300 group-hover:text-green-500">
-                        {post.answers !== undefined && post.answers.length}
-                      </p>
+                    {!zenMode && <p className="text-gray-500 dark:text-gray-300 group-hover:text-green-500">
+                      {post.answers !== undefined && post.answers.length}
+                    </p>}
                   </div>
-                  {/* <div className='col-span-3 flex group items-center w-fit relative'>
-                    <svg
-                      viewBox="0 0 40 40"
-                      fill="none"
-                      className={
-                        post.youBranchedCalc > 0
-                          ? "h-[40px] w-[40px] fill-green-500"
-                          : "h-[40px] w-[40px] fill-gray-500 dark:fill-gray-300 group-hover:fill-green-500"
-                      }
-                    >
-                      {post.youBranchedCalc > 0 ? (
-                        <path
-                          d="M29.2101 13.5264C28.9718 13.2882 28.674 13.0499 28.3762 12.8712H28.3166C26.4702 11.7396 24.0877 11.68 22.2413 12.8712C20.6927 13.8242 19.6801 15.5515 19.6206 17.398C18.8463 16.5045 17.8337 15.9089 16.6425 15.6111C15.9873 15.4324 15.3321 15.4324 14.7365 15.492C14.4387 15.492 14.1409 15.5515 13.8431 15.6707L11.0436 16.5045C10.7458 16.5641 10.5671 16.8619 10.5671 17.1597C10.5671 17.5171 10.6267 17.8745 10.6863 18.1723C10.6863 18.1723 10.6863 18.1723 10.6863 18.2318C11.1628 20.3761 12.8305 22.0438 14.9747 22.5203C15.4512 22.6394 15.8682 22.699 16.2851 22.699C17.4763 22.699 18.608 22.3416 19.6206 21.6269V27.3448C19.6206 27.7022 19.9184 28 20.2758 28C20.6331 28 20.9309 27.7022 20.9309 27.3448V19.3635C21.5861 19.6018 22.3009 19.7209 22.956 19.7209C24.0282 19.7209 25.0407 19.4231 25.9937 18.8274C26.5298 18.4701 27.0063 18.0531 27.4232 17.5766C27.6019 17.3384 27.7806 17.1001 27.9593 16.8023L29.3292 14.2412C29.5079 14.0625 29.4483 13.7051 29.2101 13.5264Z"
-                          className="fill-green-500"
-                        ></path>
-                      ) : (
-                        <path d="M29.9362 13.5264C29.6791 13.2882 29.3578 13.0499 29.0366 12.8712H28.9723C26.9803 11.7396 24.4099 11.68 22.4178 12.8712C20.7471 13.8242 19.6547 15.5515 19.5904 17.398C18.7551 16.5045 17.6626 15.9089 16.3775 15.6111C15.6706 15.4324 14.9637 15.4324 14.3212 15.492C13.9999 15.492 13.6786 15.5515 13.3573 15.6707L10.3371 16.5045C10.0158 16.5641 9.823 16.8619 9.823 17.1597C9.823 17.5171 9.88726 17.8745 9.95152 18.1723C9.95152 18.1723 9.95152 18.1723 9.95152 18.2318C10.4656 20.3761 12.2649 22.0438 14.5782 22.5203C15.0923 22.6394 15.5421 22.699 15.9919 22.699C17.2771 22.699 18.498 22.3416 19.5904 21.6269V27.3448C19.5904 27.7022 19.9117 28 20.2973 28C20.6828 28 21.0041 27.7022 21.0041 27.3448V19.3635C21.711 19.6018 22.4821 19.7209 23.1889 19.7209C24.3456 19.7209 25.438 19.4231 26.4662 18.8274C27.0445 18.4701 27.5586 18.0531 28.0084 17.5766C28.2012 17.3384 28.394 17.1001 28.5867 16.8023L30.0647 14.2412C30.2575 14.0625 30.1932 13.7051 29.9362 13.5264ZM14.9637 21.2099C13.2287 20.8526 11.815 19.5422 11.4295 17.934C11.4295 17.934 11.4295 17.934 11.4295 17.8745C11.4295 17.8149 11.3652 17.6958 11.3652 17.6362L13.7428 16.981C13.9356 16.9215 14.1926 16.8619 14.4497 16.8619C14.9637 16.8023 15.4778 16.8619 15.9919 16.9215C17.6626 17.2788 18.9478 18.4105 19.4619 19.8996C18.3052 21.0908 16.5702 21.5673 14.9637 21.2099ZM27.3015 16.2067C27.173 16.3854 27.0445 16.5641 26.916 16.7428C26.5947 17.1001 26.2091 17.4575 25.7593 17.6958C24.3456 18.5296 22.4821 18.5892 21.0041 17.8149C20.9399 16.2663 21.7752 14.7772 23.1889 13.9434C24.7312 13.0499 26.659 13.0499 28.2012 13.9434C28.2654 14.0029 28.3297 14.0029 28.394 14.0625L27.3015 16.2067Z"></path>
-                      )}
-                    </svg>
-                    <p
-                      className={
-                        post.youBranchedCalc > 0
-                          ? "text-green-500"
-                          : "text-gray-500 dark:text-gray-300 group-hover:text-green-500"
-                      }
-                    >
-                      {post.numBranches}
-                    </p>
-                  </div> */}
-                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : 0} zenMode={zenMode}/>
+                  <BoostButton
+                    tx_id={post.tx_id}
+                    difficulty={
+                      post.difficulty !== undefined ? post.difficulty : 0
+                    }
+                    zenMode={zenMode}
+                  />
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"
@@ -169,8 +159,8 @@ const SimplePostCard = ({ post }) => {
           </div>
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
-export default SimplePostCard
+export default SimplePostCard;

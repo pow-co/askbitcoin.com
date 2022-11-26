@@ -41,7 +41,7 @@ const ErrorSnackbar = (props) => {
   )
 }
 
-const BoostButton = ({ tx_id, difficulty }) => {
+const BoostButton = ({ tx_id, zenMode, difficulty }) => {
   const { relayOne } = useRelay()
   //const { boost } = useBitcoin()
 const boost = async (contentTxid) => {
@@ -109,7 +109,7 @@ const handleBoost = async (e) => {
       console.log('bitcoin.boost.result', {txid, txhex,job});
 }
   return (
-    <div onClick={handleBoost} className='col-span-2 flex group items-center w-fit relative '>
+    <div onClick={handleBoost} className={`col-span-${zenMode ? 2 : 3} flex group items-center w-fit relative`}>
         <div className='hidden group-hover:block animate-ping absolute left-[18px] min-h-[33px] min-w-[33px] rounded-full bg-blue-200'></div>
         <div className='hidden group-hover:block animate-ping  delay-75 absolute left-[24px] min-h-[22px] min-w-[22px] rounded-full bg-blue-400'></div>
         <div className='hidden group-hover:block animate-ping  delay-100 absolute left-[29px] min-h-[11px] min-w-[11px] rounded-full bg-blue-600'></div>
