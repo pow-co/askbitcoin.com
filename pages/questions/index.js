@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Dashboard from "./dashboard";
-import { useAPI } from "../hooks/useAPI";
-import { useTuning } from "../context/TuningContext";
+import Dashboard from "../dashboard";
+import { useAPI } from "../../hooks/useAPI";
+import { useTuning } from "../../context/TuningContext";
 
 const Questions = () => {
   const [recentQuestions, setRecentQuestions] = useState([]);
