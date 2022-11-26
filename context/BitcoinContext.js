@@ -73,60 +73,62 @@ const BitcoinProvider = (props) => {
       if (!wallet) {
         throw new Error("Please sign in");
       }
-      let resp, outputs, opReturn;
-      if (reply_tx) {
-        opReturn = [
-          "onchain",
-          "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
-          "answer",
-          JSON.stringify({
-            question_tx_id: reply_tx,
-            content,
-          }),
-        ];
-      } else {
-        opReturn = [
-          "onchain",
-          "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
-          "question",
-          JSON.stringify({
-            content,
-          }),
-        ];
-      }
-      switch (wallet) {
-        case "twetch":
-          outputs = [
-            {
-              args: opReturn,
-              to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
-              sats: 2180,
-            },
+      try {
+        let resp, outputs, opReturn;
+        if (reply_tx) {
+          opReturn = [
+            "onchain",
+            "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
+            "answer",
+            JSON.stringify({
+              question_tx_id: reply_tx,
+              content,
+            }),
           ];
-          try {
-            resp = await twetchSend(outputs);
-            return resp;
-          } catch (error) {
-            throw new Error(error);
-          }
-        case "relayx":
-          outputs = {
-            opReturn,
-            currency: "USD",
-            amount: 0.02,
-            to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
-          };
-          try {
-            resp = await relaySend(outputs);
-            return resp;
-          } catch (error) {
-            console.log("here");
-            throw new Error(error);
-          }
-        default:
-          console.log("no wallet selected");
-          return null;
-      }
+        } else {
+          opReturn = [
+            "onchain",
+            "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
+            "question",
+            JSON.stringify({
+              content,
+            }),
+          ];
+        }
+        switch (wallet) {
+          case "twetch":
+            outputs = [
+              {
+                args: opReturn,
+                to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
+                sats: 2180,
+              },
+            ];
+            try {
+              resp = await twetchSend(outputs);
+              return resp;
+            } catch (error) {
+              throw new Error(error);
+            }
+          case "relayx":
+            outputs = {
+              opReturn,
+              currency: "USD",
+              amount: 0.02,
+              to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
+            };
+            try {
+              resp = await relaySend(outputs);
+              return resp;
+            } catch (error) {
+              console.log("here");
+              throw new Error(error);
+            }
+          default:
+            console.log("no wallet selected");
+            return null;
+        }
+      } catch (error) {}
     },
     [wallet]
   );

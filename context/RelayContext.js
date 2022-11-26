@@ -132,10 +132,8 @@ const RelayProvider = (props) => {
     async (outputs) => {
       try {
         console.log("relay.send.outputs", outputs);
-        if (relayOne) {
-          let result = await relayOne.send(outputs);
-          return result;
-        }
+        let result = await relayOne.send(outputs);
+        return result;
       } catch (error) {
         console.log("relayx.send.error", outputs, error);
         throw new Error(error);

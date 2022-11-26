@@ -94,7 +94,7 @@ const Composer = ({ reply_tx, successAction }) => {
 
       if(!resp){
         return
-      }
+      } 
 
       let rawTx = resp.rawTx || resp.rawtx;
       let txid = resp.txid;
