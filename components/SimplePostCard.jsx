@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 
 const SimplePostCard = ({ post }) => {
     const router = useRouter();
+    const zenMode = true;
 
   const navigate = (e) => {
     e.stopPropagation();
@@ -30,7 +31,7 @@ const SimplePostCard = ({ post }) => {
       <div onClick={navigate}  className='grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg'>
         <div className='col-span-12'>
           <div className='mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer'>
-            <div className='col-span-1'>
+            {!zenMode && <div className='col-span-1'>
               {/* <Link  href={`/u/${post.userId}`}>
                 <a onClick={(e)=>e.stopPropagation()}>
                   <UserIcon src={post.userByUserId.icon} size={46}/>
@@ -39,17 +40,18 @@ const SimplePostCard = ({ post }) => {
               <a>
               <UserIcon src={`https://bitpic.network/u/0`} size={46}/>
               </a>
-            </div>
-            <div className='col-span-11 ml-6'>
-              <div className='flex'>
+            </div>}
+            <div className='col-span-12 ml-6'>
+               <div className='flex'>
                 {/* <Link  href={`/u/${post.userId}`}>
                   <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
                     {post.userByUserId.name}<span className='ml-1 font-normal text-gray-500 dark:text-gray-300'>@{post.userId}</span>
                   </div>
                 </Link> */}
-                <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
+
+                {!zenMode && <div onClick={(e)=>e.stopPropagation()} className='text-base leading-4 font-bold text-gray-900 dark:text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis	hover:underline'>
                     1anon
-                  </div>
+                  </div>}
                 <div className='grow'/>
                 <a target="_blank" rel="noreferrer" href={`https://whatsonchain.com/tx/${post.tx_id}`} className='text-xs leading-5 whitespace-nowrap text-gray-500 dark:text-gray-300 hover:text-gray-700 hover:dark:text-gray-500'>
                   {moment(post.createdAt).fromNow()}
@@ -77,7 +79,7 @@ const SimplePostCard = ({ post }) => {
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
               <div className='ml-1'>
                 <div className='grid grid-cols-12 gap-4 w-full'>
-                  <div className='col-span-5'/>
+                  <div className='col-span-8'/>
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <div onClick={handleLike}>
                       <svg
@@ -105,7 +107,7 @@ const SimplePostCard = ({ post }) => {
                       0{post.numLikes}
                     </p>
                   </div> */}
-                  <div className='col-span-3 flex group items-center w-fit relative'>
+                  <div className='col-span-2 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"
                       fill="none"
@@ -150,7 +152,7 @@ const SimplePostCard = ({ post }) => {
                       {post.numBranches}
                     </p>
                   </div> */}
-                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : 0}/>
+                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : 0} zenMode={zenMode}/>
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"

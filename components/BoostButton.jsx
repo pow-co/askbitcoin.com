@@ -109,7 +109,7 @@ const handleBoost = async (e) => {
       console.log('bitcoin.boost.result', {txid, txhex,job});
 }
   return (
-    <div onClick={handleBoost} className='col-span-4 flex group items-center w-fit relative '>
+    <div onClick={handleBoost} className='col-span-2 flex group items-center w-fit relative '>
         <div className='hidden group-hover:block animate-ping absolute left-[18px] min-h-[33px] min-w-[33px] rounded-full bg-blue-200'></div>
         <div className='hidden group-hover:block animate-ping  delay-75 absolute left-[24px] min-h-[22px] min-w-[22px] rounded-full bg-blue-400'></div>
         <div className='hidden group-hover:block animate-ping  delay-100 absolute left-[29px] min-h-[11px] min-w-[11px] rounded-full bg-blue-600'></div>
@@ -120,9 +120,9 @@ const handleBoost = async (e) => {
                 fill='transparent'
             ></path>
         </svg>
-        <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-500 -ml-3">
+        {!zenMode && <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-500 -ml-3">
              {difficulty.toFixed(3)} 
-        </p>
+        </p>}
     </div>
    
   )
