@@ -31,6 +31,7 @@ const tag = {
 const TuneProvider = (props) => {
   const router = useRouter();
   const [filter, setFilter] = useLocalStorage(filterStorageKey, "all-time");
+  const [zenMode, setZenMode] = useLocalStorage(zenModeStorageKey, true);
   const [sort, setSort] = useLocalStorage(sortStorageKey, "latest");
   const [startTimestamp, setStartTimestamp] = useState(filters[filter]);
   const [tag, setTag] = useState("question");
@@ -69,9 +70,21 @@ const TuneProvider = (props) => {
       setSort,
       tag,
       setTag,
+      zenMode,
+      setZenMode,
       startTimestamp,
     }),
-    [filter, setFilter, sort, setSort, tag, setTag, startTimestamp]
+    [
+      filter,
+      setFilter,
+      sort,
+      setSort,
+      tag,
+      setTag,
+      startTimestamp,
+      zenMode,
+      setZenMode,
+    ]
   );
 
   return <TuningContext.Provider value={value} {...props} />;
@@ -93,3 +106,4 @@ export { TuneProvider, useTuning };
 
 const filterStorageKey = "askbitcoin__TuneProvider_filter";
 const sortStorageKey = "askbitcoin__TuneProvider_sort";
+const zenModeStorageKey = "askbitcoin__TuneProvider_zenMode";

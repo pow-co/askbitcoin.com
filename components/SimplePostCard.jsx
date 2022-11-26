@@ -6,10 +6,11 @@ import moment from "moment";
 import likeTwetch from "../services/twetch/like-twetch";
 import BoostButton from "./BoostButton";
 import { useEffect } from "react";
+import { useTuning } from "../context/TuningContext";
 
 const SimplePostCard = ({ post }) => {
   const router = useRouter();
-  const zenMode = true;
+  const { zenMode } = useTuning();
 
   const navigate = (e) => {
     e.stopPropagation();
