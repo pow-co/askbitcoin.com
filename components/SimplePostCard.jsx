@@ -93,7 +93,7 @@ const SimplePostCard = ({ post }) => {
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
               <div className="ml-1">
                 <div className="grid grid-cols-12 gap-4 w-full">
-                  <div className={`col-span-${zenMode ? 8 : 5}`} />
+                  <div className={`col-span-5` } />
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <div onClick={handleLike}>
                       <svg
@@ -121,7 +121,7 @@ const SimplePostCard = ({ post }) => {
                       0{post.numLikes}
                     </p>
                   </div> */}
-                  <div className={`col-span-${zenMode ? 2 : 3} flex group items-center w-fit relative`}>
+                  <div className={`col-span-3 justify-center flex group items-center w-full relative`}>
                     <svg
                       viewBox="0 0 40 40"
                       fill="none"
