@@ -83,7 +83,7 @@ const DetailPostCard = ({ post }) => {
               <div className='ml-1'>
                 <div className='grid grid-cols-12  gap-4 w-full'>
                   <div className={`col-span-5`}/>
-                  <div className={`col-span-3 justify-center flex group items-center w-full relative`}>
+                  <div className={`col-span-3 justify-center flex group items-center w-fit relative`}>
                     <svg
                       viewBox="0 0 40 40"
                       fill="none"
