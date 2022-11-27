@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { useTuning } from "../../context/TuningContext";
 import { useAPI } from "../../hooks/useAPI";
 import { useBitcoin } from "../../context/BitcoinContext";
+import { useEvents } from "../../hooks/useEvents";
 
 /* export async function getServerSideProps(context) {
   const { params } = context;
@@ -24,60 +25,56 @@ import { useBitcoin } from "../../context/BitcoinContext";
 } */
 
 export default function DetailPage() {
-  const [post, setPost] = useState();
-  const [answers, setAnswers] = useState([]);
   const router = useRouter();
-  const { tx_id } = router.query;
+  const query = router.query;
   const { authenticated } = useBitcoin();
   const { startTimestamp } = useTuning();
 
   let { data, error, refresh, loading } = useAPI(
-    tx_id !== undefined ? `/questions/${tx_id}` : null //?start_timestamp=${startTimestamp}`
+    `/questions/${query.tx_id}` //?start_timestamp=${startTimestamp}`
   );
 
-  useEffect(() => {
-    console.log(data, loading, error);
-    let newData;
-    if (data?.question !== undefined) {
-      newData = data.question;
-      newData.difficulty = newData.boostpow_proofs.reduce((sum, proof) => {
-        return new BigNumber(sum).plus(proof.difficulty).toNumber();
-      }, 0);
+  const events = useEvents(`questions.${query.tx_id}.answer`, onAnswer);
 
-      newData.answers = newData.answers.map((answer) => {
-        return Object.assign(answer, {
-          difficulty: answer.boostpow_proofs.reduce((sum, { difficulty }) => {
-            return new BigNumber(sum).plus(difficulty).toNumber();
-          }, 0),
-        });
-      });
-      newData.answers = newData.answers.sort((a, b) =>
-        a.difficulty < b.difficulty ? 1 : -1
-      );
-    } else {
-      return;
-    }
+  function onAnswer(answer) {
+    console.log("on answer", answer);
+    //enqueueSnackbar(`new answer: ${answer.content}`);
+  }
 
-    if (data) {
-      setPost(newData);
-      setAnswers(newData.answers);
-    } else {
-      !error && !loading && data && setPost(newData);
-      !error && !loading && data && setAnswers(newData.answers);
-    }
+  if (!data) {
+    return (
+      <ThreeColumnLayout>
+        <div className="mt-4 lg:mt-10">
+          <Loader />
+        </div>
+      </ThreeColumnLayout>
+    );
+  }
 
-    //console.log(data, loading, error);
-  }, [data, tx_id, router, startTimestamp]);
+  const { question } = data;
+  console.log(question);
+
+  var { answers } = question;
+
+  answers = answers.map((answer) => {
+    return Object.assign(answer, {
+      difficulty: answer.boostpow_proofs.reduce((sum, { difficulty }) => {
+        return new BigNumber(sum).plus(difficulty).toNumber();
+      }, 0),
+    });
+  });
+
+  answers = answers.sort((a, b) => (a.difficulty < b.difficulty ? 1 : -1));
 
   return (
     <ThreeColumnLayout>
       <div className="col-span-12 lg:col-span-6 min-h-screen pb-20">
         <div className="mt-4 lg:mt-10">
           {loading && <Loader />}
-          {!loading && !error && <DetailPostCard post={post} />}
+          {!loading && !error && <DetailPostCard post={question} />}
           {!loading && !error && (
             <div className="bg-gray-100 dark:bg-gray-600 rounded-b-lg py-3 px-4 mb-1">
-              <Composer reply_tx={tx_id} />
+              <Composer reply_tx={query.tx_id} />
             </div>
           )}
           {answers?.map((answer) => (
