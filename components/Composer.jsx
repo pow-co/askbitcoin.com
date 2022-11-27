@@ -105,36 +105,49 @@ const Composer = ({ reply_tx, successAction }) => {
     const handlePost = async (e) => {
       e.preventDefault()
       const content = serialize(editor.children)
-      let opReturn;
-      if (reply_tx) {
-        opReturn = [
-          "onchain",
-          "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
-          "answer",
-          JSON.stringify({
-            question_tx_id: reply_tx,
-            content,
-          }),
-        ];
-      } else {
-        opReturn = [
-          "onchain",
-          "1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN",
-          "question",
-          JSON.stringify({
-            content,
-          }),
-        ];
-      }
 
-      const outputs = {
-        opReturn,
-        currency: "BSV",
-        amount: 0.00052,
-        to: "1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ",
-      };
+      const payload = {
+        question_tx_id:reply_tx,
+        content
+      }
+      
+      const payloadToSign = JSON.stringify(Object.assign(payload, {
+        onchain_app: '1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN',
+        onchain_event: reply_tx ? 'answer' : 'question',
+        onchain_nonce: new Date().getTime()
+      }))
+
+      const bitcom = '18ea4BfMuWZxVav4hz5HmBDJBaxsG8wBEF'
+
+      console.log('relayx.sign', `${bitcom}${payloadToSign}`)
+
+      const { value: signature } = await relayone.sign(`${bitcom}${payloadToSign}`)
+
+      const pubkey = localStorage.getItem('relayx.pubkey')
+
+      const id = new PublicKey(pubkey).toAddress().toString()
+
+      console.log('relayone.signature', signature)
+
+      let outputs = {
+        opReturn: [
+          'onchain',
+          '1HWaEAD5TXC2fWHDiua9Vue3Mf8V1ZmakN',
+          reply_tx ?'answer' : 'question',
+          payloadToSign,
+          "|",
+          authorIdentityPrefix,
+          "BITCOIN_ECDSA",
+          id,
+          signature,
+          '0x05'
+        ],
+        currency: 'USD',
+        amount: 0.0218,
+        to: '1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ'
+      }
     
-      let { txid,rawTx } = await toast.promise(relayOne.send(outputs), {
+      let result = await toast.promise(relayOne.send(outputs), {
         pending: 'Transaction is pending 🚀',
         success: {
           render({data}){
@@ -158,6 +171,9 @@ const Composer = ({ reply_tx, successAction }) => {
       progress: undefined,
       theme: "light",
       });
+
+      let { amount, currency, identity, paymail, rawTx, satoshis, txid } = result;
+      console.log(result);
       setValue(blankSlateValue)
 
       if(!txid && !rawTx){
