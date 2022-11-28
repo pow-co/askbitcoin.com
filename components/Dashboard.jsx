@@ -9,7 +9,7 @@ import {
   Composer,
   PostCard,
   OnchainPostCard,
-} from "../components";
+} from ".";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getLocalFeed, getLocalFeedPagination } from "../services";
 import Link from "next/link";
@@ -53,22 +53,22 @@ const Dashboard = ({ data, recent, error, loading }) => {
   const handleChangeTab = (tag) => {
     switch (tag) {
       case "":
-        router.push("/", undefined, { shallow: true });
+        router.push("/");
         break;
       //case "1F9E9":
       case "question":
-        router.push("/questions", undefined, { shallow: true });
+        router.push("/questions");
         break;
       //case "1F4A1":
       case "answer":
-        router.push("/answers", undefined, { shallow: true });
+        router.push("/answers");
         break;
       //case "1F48E":
       case "project":
-        router.push("/projects", undefined, { shallow: true });
+        router.push("/projects");
         break;
       case "test":
-        router.push("/test", undefined, { shallow: true });
+        router.push("/test");
         break;
       default:
         console.log("unknown tag");

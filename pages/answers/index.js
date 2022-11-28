@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Dashboard from "../dashboard";
+import Dashboard from "../../components/Dashboard";
 import { useAPI } from "../../hooks/useAPI";
 import { useTuning } from "../../context/TuningContext";
 
