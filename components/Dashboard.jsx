@@ -26,29 +26,10 @@ function ago(period) {
 }
 
 const Dashboard = ({ data, recent, error, loading }) => {
-  const [posts, setPosts] = useState([]);
   const router = useRouter();
   const { authenticated } = useBitcoin();
   const { startTimestamp, tag, setTag } = useTuning();
-
-  useEffect(() => {
-    if (data) {
-      setPosts(data.posts || data.questions || data.answers || data.events);
-    } else {
-      !error &&
-        !loading &&
-        data &&
-        setPosts(data.posts || data.questions || data.answers || data.events);
-    }
-    console.log(data, loading, error);
-  }, [data, posts, router, startTimestamp]);
-  /* let {
-    data: recent,
-    error: recentError,
-    loading: recentLoading,
-  } = useAPI(`/recent/problems`); */
-
-  //const posts = [];
+  console.log(data,recent)
 
   const handleChangeTab = (tag) => {
     switch (tag) {
@@ -161,7 +142,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
             
             {!loading &&
               !error &&
-              posts.map((post) => {
+              data.map((post) => {
                 if (post.txid) {
                   return <OnchainPostCard key={post.txid} post={post} />;
                 } else {

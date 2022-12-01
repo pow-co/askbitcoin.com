@@ -4,7 +4,6 @@ import { useAPI } from "../hooks/useAPI";
 import { useTuning } from "../context/TuningContext";
 
 const Index = () => {
-  const [recentQuestions, setRecentQuestions] = useState([]);
   const { startTimestamp } = useTuning();
   let {
     data,
@@ -16,15 +15,17 @@ const Index = () => {
     "/recent/questions?limit=100"
   );
 
-  useEffect(() => {
-    console.log(recent);
-    setRecentQuestions(recent?.questions);
-  }, [recent]);
+  let questions = data?.questions;
+  let boosted_tx = questions?.map((q) => q.tx_id);
+  let recent_questions = recent?.questions;
+  recent_questions = recent_questions?.filter(
+    (q) => !boosted_tx?.includes(q.tx_id)
+  );
 
   return (
     <Dashboard
-      data={data}
-      recent={recentQuestions}
+      data={questions}
+      recent={recent_questions}
       error={error}
       loading={questions_loading || recent_loading}
     />

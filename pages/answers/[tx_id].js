@@ -34,12 +34,7 @@ export default function DetailPage() {
     tx_id !== undefined ? `/answers/${tx_id}` : null //?start_timestamp=${startTimestamp}`
   );
 
-  useEffect(() => {
-    console.log(data, loading, error);
-    if (data?.answer) {
-      setPost(data.answer);
-    }
-  }, [data]);
+  let answer = data?.answer;
 
   return (
     <ThreeColumnLayout>
@@ -61,7 +56,7 @@ export default function DetailPage() {
         </svg>
         <div className="mt-4 lg:mt-10">
           {loading && <Loader />}
-          {!loading && !error && <SimplePostCard post={post} />}
+          {!loading && !error && <SimplePostCard post={answer} />}
         </div>
       </div>
     </ThreeColumnLayout>

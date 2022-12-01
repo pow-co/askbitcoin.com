@@ -52,7 +52,6 @@ export default function DetailPage() {
   }
 
   const { question } = data;
-  console.log(question);
 
   var { answers } = question;
 
