@@ -142,7 +142,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
             
             {!loading &&
               !error &&
-              data.map((post) => {
+              data?.map((post) => {
                 if (post.txid) {
                   return <OnchainPostCard key={post.txid} post={post} />;
                 } else {
