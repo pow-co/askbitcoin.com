@@ -6,10 +6,15 @@ import { useTuning } from "../context/TuningContext";
 const Index = () => {
   const [recentQuestions, setRecentQuestions] = useState([]);
   const { startTimestamp } = useTuning();
-  let { data, error, refresh, loading } = useAPI(
-    `/questions?start_timestamp=${startTimestamp}`
+  let {
+    data,
+    error,
+    refresh,
+    loading: questions_loading,
+  } = useAPI(`/questions?start_timestamp=${startTimestamp}`);
+  let { data: recent, loading: recent_loading } = useAPI(
+    "/recent/questions?limit=100"
   );
-  let { data: recent } = useAPI("/recent/questions?limit=100");
 
   useEffect(() => {
     console.log(recent);
@@ -21,7 +26,7 @@ const Index = () => {
       data={data}
       recent={recentQuestions}
       error={error}
-      loading={loading}
+      loading={questions_loading || recent_loading}
     />
   );
 };

@@ -158,7 +158,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
                 refreshFunction={refresh}
               >
               </InfiniteScroll> */}
-            {loading && <Loader />}
+            
             {!loading &&
               !error &&
               posts.map((post) => {
@@ -168,10 +168,11 @@ const Dashboard = ({ data, recent, error, loading }) => {
                   return <SimplePostCard key={post.tx_id} post={post} />;
                 }
               })}
-            {recent && (
+            {loading && <Loader />}
+            {!loading && recent && (
               <div className="flex py-5 items-center">
                 <div className="grow border border-bottom border-gray-600 dark:border-gray-300" />
-                <div className="mx-5 font-semibold text-lg">Recent</div>
+                <div className="mx-5 font-semibold text-gray-600 dark:text-gray-300 text-lg">Recent</div>
                 <div className="grow border border-bottom border-gray-600 dark:border-gray-300" />
               </div>
             )}
