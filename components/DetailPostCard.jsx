@@ -81,9 +81,9 @@ const DetailPostCard = ({ post }) => {
               <PostDescription bContent={post.content}/>
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
               <div className='ml-1'>
-                <div className='grid grid-cols-12  gap-4 w-full'>
-                  <div className={`col-span-5`}/>
-                  <div className={`col-span-3 justify-center flex group items-center w-fit relative`}>
+                <div className='flex w-full'>
+                  <div className={`grow`}/>
+                  <div className={`min-w-[111px]justify-center flex group items-center w-fit relative`}>
                     <svg
                       viewBox="0 0 40 40"
                       fill="none"
