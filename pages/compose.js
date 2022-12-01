@@ -1,8 +1,13 @@
 import React from "react";
 import Head from "next/head";
 import { Composer, ThreeColumnLayout } from "../components";
+import { useRouter } from "next/router";
 
 export default function Compose() {
+  const router = useRouter();
+  const navigate = (txid) => {
+    router.push(`/questions/${txid}`);
+  };
   return (
     <ThreeColumnLayout>
       <div className="col-span-12 lg:col-span-6 min-h-screen">

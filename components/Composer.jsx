@@ -59,17 +59,17 @@ const ErrorSnackbar = (props) => {
 
 
 
-const Composer = ({ reply_tx, successAction }) => {
+const Composer = ({ reply_tx, onSuccess }) => {
   const { relayOne } = useRelay()
     const router = useRouter()
     const [twetchPost, setTwetchPost] = useState()
     const [placeholder, setPlaceholder] = useState("What's the latest?")
     const { tag, setTag } = useTuning() 
     const { send, authenticated } = useBitcoin()
-    const [editor] = useState(() => withReact(createEditor()));
+    const blankSlateValue = [{ type: "paragraph", children: [{ text: "" }] }];
+    const [editor, setEditor] = useState(() => withReact(createEditor()));
     const renderElement = useCallback((props) => <Element {...props} />, []);
     const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-    const blankSlateValue = [{ type: "paragraph", children: [{ text: "" }] }];
     const [value, setValue] = useState(blankSlateValue);
 
 
@@ -105,6 +105,7 @@ const Composer = ({ reply_tx, successAction }) => {
     const handlePost = async (e) => {
       e.preventDefault()
       const content = serialize(editor.children)
+      
       let opReturn;
       if (reply_tx) {
         opReturn = [
@@ -151,15 +152,15 @@ const Composer = ({ reply_tx, successAction }) => {
       }, {
       position: "top-center",
       autoClose: 5000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
+      closeButton: false,
       theme: "light",
       });
-      setValue(blankSlateValue)
-
+      
       if(!txid && !rawTx){
         return
       }
@@ -213,19 +214,20 @@ const Composer = ({ reply_tx, successAction }) => {
             console.error('api.answers.post.response', error);
           }
         })();
-
+        
         (async () => {
           try {
-
+            
             await axios.get(`https://askbitcoin.ai/api/v1/answers/${txid}`);
-
-            router.push(`/answers/${txid}`)
+            
 
           } catch (error) {
 
             console.error('api.answers.show.error', error);
           }
         })();
+
+        router.push(`/answers/${txid}`)
 
       } else {
         
@@ -235,6 +237,7 @@ const Composer = ({ reply_tx, successAction }) => {
               transaction: rawTx
             });
 
+            
             console.log('api.questions.post.response', postTransactionResponse);
 
           } catch (error) {
@@ -247,7 +250,6 @@ const Composer = ({ reply_tx, successAction }) => {
 
             await axios.get(`https://askbitcoin.ai/api/v1/questions/${txid}`);
 
-            router.push(`/questions/${txid}`)
 
           } catch (error) {
 
@@ -255,7 +257,11 @@ const Composer = ({ reply_tx, successAction }) => {
           }
         })();
 
+        router.push(`/questions/${txid}`)
+
       }
+      setValue(blankSlateValue)
+      
     };
 
     const handleChange = async (newValue) => {
