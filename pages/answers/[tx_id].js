@@ -44,6 +44,21 @@ export default function DetailPage() {
   return (
     <ThreeColumnLayout>
       <div className="col-span-12 lg:col-span-6 min-h-screen pb-20">
+        <svg
+          onClick={() => router.back()}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="relative top-[69px] -left-[42px] w-6 h-6 stroke-gray-700 dark:stroke-gray-300 cursor-pointer hover:opacity-70"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
         <div className="mt-4 lg:mt-10">
           {loading && <Loader />}
           {!loading && !error && <SimplePostCard post={post} />}
