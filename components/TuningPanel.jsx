@@ -5,10 +5,6 @@ import { useTuning } from '../context/TuningContext'
 const TuningPanel = ({ closeAction }) => {
     const { filter, setFilter, zenMode, setZenMode } = useTuning()
 
-    useEffect(()=>{
-      console.log(zenMode)
-    })
-
     const handleChange = (e) => {
       setFilter(e.target.value);
       if (closeAction !== null){
