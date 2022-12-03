@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "scp": "scp -r out/* root@next.askbitcoin.ai:/var/www/next.askbitcoin.ai",
+    "scp": "scp -o StrictHostKeyChecking=no -r out/* root@next.askbitcoin.ai:/var/www/next.askbitcoin.ai",
     "deploy": "npm run build && npm run export && npm run scp"
   },
   "dependencies": {
