@@ -1,4 +1,4 @@
-# Sha Wars Game Design Document
+# AskBitcoin
 
 Game Design Document for https://shawars.com
 
