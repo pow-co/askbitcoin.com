@@ -103,11 +103,11 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
                         <p className='ml-5 text-2xl font-bold'>Boostpow</p>
                     </div>
                     <div className='grow flex flex-col justify-center items-center'>
-                        <div className="bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
+                        <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
                         Custom difficulty
                         </div>
                         <input
-                        className="border border-gray-300 dark:border-gray-700 rounded-l-md text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-800 py-1 pl-2.5 text-base"
+                        className="border border-gray-300 dark:border-gray-700 rounded-l-md text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 py-1 pl-2.5 text-base"
                         type="number"
                         autoFocus
                         min={0.025}
