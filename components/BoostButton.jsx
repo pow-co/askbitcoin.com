@@ -46,6 +46,7 @@ export const ErrorSnackbar = (props) => {
 
 const BoostButton = ({ tx_id, zenMode, difficulty }) => {
   const { relayOne } = useRelay()
+  const { authenticated } = useBitcoin()
   const [action, setAction] = useState("")
   const [superBoost, setSuperBoost] = useState(false)
   const [boostPopupOpen, setBoostPopupOpen] = useState(false)
@@ -56,6 +57,9 @@ const BoostButton = ({ tx_id, zenMode, difficulty }) => {
 
   //const { boost } = useBitcoin()
 const boost = async (contentTxid) => {
+  if(!authenticated){
+    throw new Error("please, log in!")
+  }
   const stag = wrapRelayx(relayOne)
   const {txid, txhex, job} = await stag.boost.buy({
     content: contentTxid,
@@ -84,7 +88,9 @@ const handleBoost = async (e) => {
   e.stopPropagation()
   e.preventDefault()
 
-  console.log("handleboost",action)
+  try {
+
+    console.log("handleboost",action)
   if(action === "click"){
 
     let {txid, txhex, job} = await toast.promise(boost(tx_id), {
@@ -131,6 +137,11 @@ const handleBoost = async (e) => {
 
     return
   }
+    
+  } catch (error) {
+    console.log(error)
+  }
+  
 
 }
 

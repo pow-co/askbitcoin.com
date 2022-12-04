@@ -9,7 +9,7 @@ import { SuccessSnackbar, ErrorSnackbar } from './BoostButton'
 
 const SuperBoostPopup = ({ contentTxId, onClose }) => {
     const { relayOne } = useRelay()
-    const { exchangeRate } = useBitcoin()
+    const { authenticated, exchangeRate } = useBitcoin()
     const [difficulty, setDifficulty] = useState(0.025)
     const [price,setPrice] = useState(0.05)
 
@@ -27,6 +27,9 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
     }
 
     const boost = async () => {
+      if (!authenticated){
+        throw new Error("please, log in!")
+      }
         const stag = wrapRelayx(relayOne)
         const {txid, txhex, job} = await stag.boost.buy({
           content: contentTxId,
@@ -51,34 +54,40 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
 
     const handleBoost = async (e) => {
 
+      try {
         let {txid, txhex, job} = await toast.promise(boost(contentTxId), {
-            pending: 'Transaction is pending 🚀',
-            success: {
-              render({data}){
-                return <SuccessSnackbar difficulty={data.job.difficulty} tx_id={data.txid}/>
-              },
-              icon:false
+          pending: 'Transaction is pending 🚀',
+          success: {
+            render({data}){
+              return <SuccessSnackbar difficulty={data.job.difficulty} tx_id={data.txid}/>
             },
-            error: {
-              render({data}){
-                return <ErrorSnackbar message={data.message}/>
-              },
-              icon:false
-            }
-          }, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          closeButton: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-      
-          console.log('bitcoin.boost.result', {txid, txhex,job});
-          onClose()
+            icon:false
+          },
+          error: {
+            render({data}){
+              return <ErrorSnackbar message={data.message}/>
+            },
+            icon:false
+          }
+        }, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        closeButton: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
+    
+        console.log('bitcoin.boost.result', {txid, txhex,job});
+        onClose()
+      } catch (error) {
+        console.log(error)
+      }
+
+        
 
     }
 
