@@ -58,7 +58,7 @@ const Market = () => {
             <div className="flex">
               <div className="grid grid-cols-1 w-full gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {items.map((item) => (
-                  <MarketItem item={item} token={token} />
+                  <MarketItem key={item.txid} item={item} token={token} />
                 ))}
               </div>
             </div>
