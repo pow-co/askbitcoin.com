@@ -150,7 +150,7 @@ const Composer = ({ reply_tx, onSuccess }) => {
           icon:false
         }
       }, {
-      position: "top-center",
+      position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,

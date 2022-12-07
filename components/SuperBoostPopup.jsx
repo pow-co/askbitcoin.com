@@ -70,7 +70,7 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
             icon:false
           }
         }, {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
