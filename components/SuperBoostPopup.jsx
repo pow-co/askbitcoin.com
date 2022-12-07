@@ -125,7 +125,7 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
                         onChange={handleChange}
                         />
                     </div>
-                    <div className='p-5 flex items-center text-center justify-center'>
+                    <div className='mb-20 sm:mb-0 p-5 flex items-center text-center justify-center'>
                         <button onClick={handleBoost} className="text-white bg-gradient-to-tr from-blue-500 to-blue-600 leading-6 py-1 px-10 font-bold border-none rounded cursor-pointer disabled:opacity-50 transition duration-500 transform hover:-translate-y-1">Boost ${price}</button>
                     </div>
                 </div>

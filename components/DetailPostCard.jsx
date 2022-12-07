@@ -30,7 +30,7 @@ const DetailPostCard = ({ post }) => {
     return <></>
   } else {
   return (
-      <div onClick={navigate}  className='grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg'>
+      <div onClick={navigate}  className='grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:sm:bg-gray-200 hover:dark:sm:bg-gray-500 mt-0.5 first:rounded-t-lg'>
         <div className='col-span-12'>
           <div className='mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer'>
             {!zenMode && <div className='col-span-1'>

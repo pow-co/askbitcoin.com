@@ -84,59 +84,60 @@ const boost = async (contentTxid) => {
 
 
 
-const handleBoost = async (e) => {
-  e.stopPropagation()
-  e.preventDefault()
+const handleBoost = async () => {
+  
+
 
   try {
 
     console.log("handleboost",action)
-  if(action === "click"){
+    if(action === "click"){
 
-    let {txid, txhex, job} = await toast.promise(boost(tx_id), {
-      pending: 'Transaction is pending 🚀',
-      success: {
-        render({data}){
-          return <SuccessSnackbar difficulty={data.job.difficulty} tx_id={data.txid}/>
+
+      let {txid, txhex, job} = await toast.promise(boost(tx_id), {
+        pending: 'Transaction is pending 🚀',
+        success: {
+          render({data}){
+            return <SuccessSnackbar difficulty={data.job.difficulty} tx_id={data.txid}/>
+          },
+          icon:false
         },
-        icon:false
-      },
-      error: {
-        render({data}){
-          return <ErrorSnackbar message={data.message}/>
-        },
-        icon:false
-      }
-    }, {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    closeButton: false,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    })
+        error: {
+          render({data}){
+            return <ErrorSnackbar message={data.message}/>
+          },
+          icon:false
+        }
+      }, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      closeButton: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      })
 
-    console.log('bitcoin.boost.result', {txid, txhex,job});
+      console.log('bitcoin.boost.result', {txid, txhex,job});
 
-  }
+    }
 
-  if (action==="longpress"){
+    if (action==="longpress"){
 
-    console.log("superboost canceled")
+      console.log("superboost canceled")
 
-    return
+      return
 
-  }
+    }
 
-  if(action==="superboost"){
+    if(action==="superboost"){
 
-    console.log("superboost trigered")
+      console.log("superboost trigered")
 
-    return
-  }
+      return
+    }
     
   } catch (error) {
     console.log(error)
@@ -195,12 +196,13 @@ function handleOnTouchStart(e) {
   console.log('handleOnTouchStart');
   startPressTimer();
   setAction("click")
+  handleBoost(e)
 }
 
 function handleOnTouchEnd(e) {
   e.preventDefault()
   e.stopPropagation()
-  console.log('handleOnMouseUp');
+  console.log('handleOnTouchEnd');
   setSuperBoost(false)
   clearTimeout(timerRef.current);
   clearTimeout(superBoostLoading.current)
@@ -212,7 +214,7 @@ function handleOnTouchEnd(e) {
 
   return (
     <>
-      <div onClick={handleBoost} onMouseDown={handleOnMouseDown} onMouseUp={handleOnMouseUp} onTouchStart={handleOnTouchStart} onTouchEnd={handleOnTouchEnd} className={`${zenMode && "justify-center"} flex group items-center w-fit relative`}>
+      <div onClick={handleBoost} onMouseDown={handleOnMouseDown} onMouseUp={handleOnMouseUp} onTouchStart={handleOnTouchStart} onTouchEnd={handleOnTouchEnd} className={`${zenMode && "justify-center"} flex group items-center w-fit relative select-none`}>
           <div className={superBoost && !boostPopupOpen ? `absolute ${zenMode ? "justify-center":"left-[14px]"} min-h-[42px] min-w-[42px] rounded-full border-t-4 border-green-500 animate-spin`: "hidden"}/>
           <div className={`hidden group-hover:block animate-ping absolute ${zenMode ? "justify-center":"left-[18px]"} min-h-[33px] min-w-[33px] rounded-full bg-blue-200`}></div>
           <div className={`hidden group-hover:block animate-ping  delay-75 absolute ${zenMode ? "justify-center":"left-[24px]"} min-h-[22px] min-w-[22px] rounded-full bg-blue-400`}></div>
