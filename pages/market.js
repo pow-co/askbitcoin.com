@@ -12,19 +12,19 @@ const Market = () => {
 
   if (error) {
     return (
-      <ThreeColumnLayout>
+      <PanelLayout>
         <div className="mt-4 lg:mt-10">Error</div>
-      </ThreeColumnLayout>
+      </PanelLayout>
     );
   }
 
   if (!data) {
     return (
-      <ThreeColumnLayout>
+      <PanelLayout>
         <div className="mt-4 lg:mt-10">
           <Loader />
         </div>
-      </ThreeColumnLayout>
+      </PanelLayout>
     );
   }
 
