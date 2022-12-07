@@ -91,8 +91,8 @@ const SimplePostCard = ({ post }) => {
               )}
               <PostDescription bContent={post.content} />
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
-              <div className="ml-1">
-                <div className="flex w-full">
+              <div className="ml-1 ">
+                <div className="flex w-full px-16">
                   <div className={`grow` } />
                   <div className={`min-w-[111px] justify-center flex group items-center w-fit relative`}>
                     <svg
