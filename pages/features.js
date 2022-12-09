@@ -85,7 +85,7 @@ export default function Features() {
                 Ask Bitcoin Features
               </p>
               <p className="text-gray-700 dark:text-gray-300 text-base mt-2 text-center lg:text-left">
-                You buy it, we will build it. Contribute to our next big feature
+                If you boost it, we will build it. Help us decide on our next big feature
                 release and who knows, you might even get a reward 🙃.
               </p>
             </div>
@@ -97,21 +97,20 @@ export default function Features() {
                   In Progress
                 </a>
               </Link>
-              {/* <Link href="/features/completed">
+              <Link href="/features/completed">
                 <a className=" text-gray-700 dark:text-gray-300 text-sm py-2 px-3 mr-2 cursor-pointer rounded-md whitespace-nowrap">
-                  Completed
+                  Requests
                 </a>
-              </Link> */}
+              </Link>
             </div>
           </div>
-          <div className="px-4 lg:px-0 grid mt-4 lg:mt-7 gap-4 grid-cols-12">
-            <div className="col-span-12 lg:col-span-6 xl:col-span-4 bg-gray-100 dark:bg-gray-600 rounded-lg p-4 w-full relative flex flex-col">
-              <p className="text-xs text-blue-500 mb-1.5">🔦 Spotlight</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="bg-gray-100 dark:bg-gray-600 rounded-xl p-4 w-full relative flex flex-col">
               <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                Buy askbitcoin.com domain
+                Support tags/categories
               </p>
               <p className="text-sm text-gray-900 opacity-70 dark:text-white mt-2">
-                This will help strenghten the Ask Bitcoin brand
+                Post, Boost and Search by tags will help you find the most relevant information in your domain of interest. 
               </p>
               <div className="grow" />
               <div className="mt-3">
@@ -121,18 +120,18 @@ export default function Features() {
                   </p>
                   <div className="grow" />
                   <p className="text-xs text-gray-900 dark:text-white">
-                    {balance.toFixed(2)}/21 BSV
+                    {balance.toFixed(2)}/21.8 Difficulty
                   </p>
                 </div>
                 <div className="relative w-full bg-green-900 bg-opacity-50  h-2 rounded-lg">
                   <div
                     className="h-2 absolute top-0 left-0 bg-green-500 rounded-lg"
-                    style={{ width: `${(balance * 100) / 21}%` }} // dynamically render based on address balance
+                    style={{ width: `${(balance * 100) / 21.8}%` }} // dynamically render based on address balance
                   />
                 </div>
               </div>
               <div className="mt-4">
-                <div className="flex">
+                <div className="flex justify-between">
                   <div className="mr-3 flex items-center">
                     <input
                       className="border-none rounded-l-md text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-800 py-1 pl-2.5 text-base focus:outline-none"
@@ -144,15 +143,119 @@ export default function Features() {
                       onChange={handleChange}
                     />
                     <div className="bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
-                      BSV
+                      Difficulty
                     </div>
                   </div>
                   <button
                     disabled={!authenticated}
                     onClick={handlePayFeature}
-                    className="py-1 px-4 border-none rounded-md text-white bg-gradient-to-tr from-blue-400 to-blue-500 cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
+                    className="py-1 px-4 sm:px-10 border-none rounded-md text-white bg-gradient-to-tr from-blue-400 to-blue-500 cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
                   >
-                    Pay
+                    Boost
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            
+            <div className="bg-gray-100 dark:bg-gray-600 rounded-xl p-4 w-full relative flex flex-col">
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                Twetch Wallet integration
+              </p>
+              <p className="text-sm text-gray-900 opacity-70 dark:text-white mt-2">
+                Sign in, Post and Boost from Twetch Wallet
+              </p>
+              <div className="grow" />
+              <div className="mt-3">
+                <div className="flex items-center">
+                  <p className="text-sm text-gray-900 dark:text-white">
+                    Progress
+                  </p>
+                  <div className="grow" />
+                  <p className="text-xs text-gray-900 dark:text-white">
+                    {balance.toFixed(2)}/21.8 Difficulty
+                  </p>
+                </div>
+                <div className="relative w-full bg-green-900 bg-opacity-50  h-2 rounded-lg">
+                  <div
+                    className="h-2 absolute top-0 left-0 bg-green-500 rounded-lg"
+                    style={{ width: `${(balance * 100) / 21.8}%` }} // dynamically render based on address balance
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="flex justify-between">
+                  <div className="mr-3 flex items-center">
+                    <input
+                      className="border-none rounded-l-md text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-800 py-1 pl-2.5 text-base focus:outline-none"
+                      type="number"
+                      autoComplete="off"
+                      min={0.1}
+                      step={0.1}
+                      value={amount}
+                      onChange={handleChange}
+                    />
+                    <div className="bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
+                      Difficulty
+                    </div>
+                  </div>
+                  <button
+                    disabled={!authenticated}
+                    onClick={handlePayFeature}
+                    className="py-1 px-4 sm:px-10 border-none rounded-md text-white bg-gradient-to-tr from-blue-400 to-blue-500 cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
+                  >
+                    Boost
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-600 rounded-xl p-4 w-full relative flex flex-col">
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                Handcash integration
+              </p>
+              <p className="text-sm text-gray-900 opacity-70 dark:text-white mt-2">
+                Sign in, Post and Boost from Handcash
+              </p>
+              <div className="grow" />
+              <div className="mt-3">
+                <div className="flex items-center">
+                  <p className="text-sm text-gray-900 dark:text-white">
+                    Progress
+                  </p>
+                  <div className="grow" />
+                  <p className="text-xs text-gray-900 dark:text-white">
+                    {balance.toFixed(2)}/21.8 Difficulty
+                  </p>
+                </div>
+                <div className="relative w-full bg-green-900 bg-opacity-50  h-2 rounded-lg">
+                  <div
+                    className="h-2 absolute top-0 left-0 bg-green-500 rounded-lg"
+                    style={{ width: `${(balance * 100) / 21.8}%` }} // dynamically render based on address balance
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="flex justify-between">
+                  <div className="mr-3 flex items-center">
+                    <input
+                      className="border-none rounded-l-md text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-800 py-1 pl-2.5 text-base focus:outline-none"
+                      type="number"
+                      autoComplete="off"
+                      min={0.1}
+                      step={0.1}
+                      value={amount}
+                      onChange={handleChange}
+                    />
+                    <div className="bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
+                      Difficulty
+                    </div>
+                  </div>
+                  <button
+                    disabled={!authenticated}
+                    onClick={handlePayFeature}
+                    className="py-1 px-4 sm:px-10 border-none rounded-md text-white bg-gradient-to-tr from-blue-400 to-blue-500 cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
+                  >
+                    Boost
                   </button>
                 </div>
               </div>
