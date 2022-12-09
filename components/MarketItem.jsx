@@ -41,6 +41,7 @@ const SuccessSnackbar = (props) => {
 
 const MarketItem = ({item, token}) => {
     const router = useRouter()
+    console.log(token)
     const { relayOne } = useRelay()
     if (!item.satoshis){ // not for sale = do not display todo
         return <></>
@@ -85,7 +86,7 @@ const MarketItem = ({item, token}) => {
                 "https://staging-backend.relayx.com/api/dex/buy",
                     {
                     address: ownerResponse,
-                    location: runItem.location,
+                    location: token.origin,
                     txid: runItem.txid,
                     }
             );
