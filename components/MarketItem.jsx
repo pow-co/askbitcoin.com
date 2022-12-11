@@ -46,6 +46,8 @@ const MarketItem = ({item, token}) => {
         return <></>
     }
 
+    console.log(token)
+
     const handleBuy = async (e) => {
         e.preventDefault()
         const resp = await toast.promise(buyItem(item), {
@@ -113,7 +115,7 @@ const MarketItem = ({item, token}) => {
         />
         <div className="flex flex-col select-none bg-gray-100 dark:bg-gray-800 p-4 rounded-b-xl max-w-full">
             <p className="text-lg font-bold flex items-center justify-between">
-                {token.name}
+                {token.name} #{item.props.no}
             </p>
             <div className="flex justify-between mt-2 items-center">
                 <p className="text-lg font-semibold text-ellipsis whitespace-nowrap mr-4 grow opacity-70">
