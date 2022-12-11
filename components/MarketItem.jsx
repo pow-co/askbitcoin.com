@@ -41,13 +41,10 @@ const SuccessSnackbar = (props) => {
 
 const MarketItem = ({item, token}) => {
     const router = useRouter()
-    console.log(token)
     const { relayOne } = useRelay()
     if (!item.satoshis){ // not for sale = do not display todo
         return <></>
     }
-
-    console.log(token)
 
     const handleBuy = async (e) => {
         e.preventDefault()
