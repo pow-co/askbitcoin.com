@@ -14,8 +14,7 @@ jobs:
           name: Push to Docker Hub
           command: |
             docker login --username $DOCKER_USER --password $DOCKER_PASSWORD
-            docker tag proofofwork-node proofofwork/powco-api:$CIRCLE_BRANCH
-            docker push proofofwork/powco-api:$CIRCLE_BRANCH
+            docker push proofofwork/askbitcoin.ai-webapp:$CIRCLE_BRANCH
 
 workflows:
   version: 2
