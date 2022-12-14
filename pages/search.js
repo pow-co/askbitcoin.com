@@ -1,30 +1,50 @@
 import { useRouter, Link } from "next/router";
-import React, { useState } from "react";
-import { ThreeColumnLayout } from "../components";
+import React, { useState, useEffect } from "react";
+import { ThreeColumnLayout, Loader, SimplePostCard } from "../components";
+import { useAPI } from "../hooks/useAPI";
 
 const Search = () => {
+  const [tag, setTag] = useState("question");
   const router = useRouter();
+  const query = router.query;
+  console.log(query);
+  const [searchText, setSearchText] = useState("");
   const [searchInput, setSearchInput] = useState("");
-  const [searchTerm, setSearchTerm] = useState(router.query.v);
-  const [postResults, setPostResults] = useState([]);
-  const [userResults, setUserResults] = useState([]);
-  const [hasMorePosts, setHasMorePosts] = useState(true);
-  const [cursorPosts, setCursorPosts] = useState(null);
-  const [hasMoreUsers, setHasMoreUsers] = useState(true);
-  const [cursorUsers, setCursorUsers] = useState(null);
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
-  const handleChange = async (e) => {
-    clearTimeout(SearchTimeOut);
-    e.preventDefault();
-    setSearchTerm(e.target.value);
-    router.push(`/search?v=${searchTerm}&p=posts`, undefined, {
-      shallow: true,
-    });
+  useEffect(() => {
+    if (query.q) {
+      setSearchInput(query.q);
+      setSearchText(query.q);
+    }
+  }, [query]);
 
-    const SearchTimeOut = setTimeout(() => {
-      console.log("here");
-      setSearchInput(searchTerm);
-    }, 1000);
+  useEffect(() => {
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+
+    setTypingTimeout(
+      setTimeout(() => {
+        // Trigger API call here
+        searchText.length > 0 && router.push(`/search?q=${searchText}`);
+        searchText.length > 0 && setSearchInput(searchText);
+      }, 1000)
+    );
+  }, [searchText]);
+
+  const { data, loading, error } = useAPI(`/search`, `?q=${searchInput}`);
+  console.log({ data, loading, error });
+
+  let { questions } = data || [];
+  let { answers } = data || [];
+
+  const handleChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleChangeTab = (value) => {
+    setTag(value);
   };
 
   return (
@@ -38,40 +58,65 @@ const Search = () => {
                 placeholder="Search"
                 id="search-input"
                 autoComplete="off"
-                value={searchTerm}
+                value={searchText}
                 onChange={handleChange}
               />
             </div>
           </div>
         </div>
-        <div className="flex flex-col rounded-lg bg-gray-100 dark:bg-gray-600 w-full mb-4">
-          {/* <div className="flex flex-row  py-0 px-4 h-[50px] items-center">
-            <p className="text-lg font-bold text-gray-700 dark:text-white text-left ">
-              People
-            </p>
-            <div className="grow" />
-            <Link href={`/search?v=${searchInput}&p=users`}>
-              <p className="text-blue-500 font-semibold text-xs cursor-pointer ">
-                View all
-              </p>
-            </Link> 
-          </div> */}
+        <div className="px-4 mt-2">
+          <div className="flex my-6">
+            <div className="flex">
+              <div
+                //onClick={() => handleChangeTab("1F9E9")}
+                onClick={() => handleChangeTab("question")}
+                className={
+                  //tag === "1F9E9"
+                  tag === "question"
+                    ? "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 font-medium mr-2 cursor-pointer rounded-md whitespace-nowrap"
+                    : "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 font-normal mr-2 cursor-pointer rounded-md whitespace-nowrap"
+                }
+              >
+                Questions
+              </div>
+              <div
+                //onClick={() => handleChangeTab("1F4A1")}
+                onClick={() => handleChangeTab("answer")}
+                className={
+                  //tag === "1F4A1"
+                  tag === "answer"
+                    ? "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 font-medium mr-2 cursor-pointer rounded-md whitespace-nowrap"
+                    : "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 font-normal mr-2 cursor-pointer rounded-md whitespace-nowrap"
+                }
+              >
+                Answers
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="w-full">
+        <div className="w-full mb-[200px]">
           <div className="relative">
-            {/* <InfiniteScroll
-              dataLength={postResults.length}
-              hasMore={hasMorePosts}
-              next={fetchMorePosts}
-              loader={<Loader />}
-              pullDownToRefresh
-              pullDownToRefreshThreshold={50}
-              refreshFunction={refreshPosts}
-            >
-              {postResults.map((post) => (
-                <PostCard key={post.transaction} post={post} />
-              ))}
-            </InfiniteScroll> */}
+            {!loading &&
+              !error &&
+              tag === "question" &&
+              questions?.map((post) => {
+                return <SimplePostCard key={post.tx_id} post={post} />;
+              })}
+            {!loading &&
+              !error &&
+              tag === "answer" &&
+              answers?.map((post) => {
+                return <SimplePostCard key={post.tx_id} post={post} />;
+              })}
+            {loading && <Loader />}
+            {!searchInput.length > 0 && (
+              <div className="flex flex-col justify-center items-center">
+                <p className="text-5xl">gm 🌞</p>
+                <p className="mt-10 text-3xl font-semibold opacity-70">
+                  Nothing to see there ...
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
