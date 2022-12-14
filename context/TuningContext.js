@@ -31,7 +31,7 @@ const tag = {
 const TuneProvider = (props) => {
   const router = useRouter();
   const [filter, setFilter] = useLocalStorage(filterStorageKey, "all-time");
-  const [zenMode, setZenMode] = useLocalStorage(zenModeStorageKey, true);
+  const [zenMode, setZenMode] = useLocalStorage(zenModeStorageKey, false);
   const [sort, setSort] = useLocalStorage(sortStorageKey, "latest");
   const [startTimestamp, setStartTimestamp] = useState(filters[filter]);
   const [tag, setTag] = useState("question");
