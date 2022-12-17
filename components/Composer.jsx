@@ -22,6 +22,8 @@ import axiosInstance, { useAPI } from '../hooks/useAPI';
 import { PostCard } from '.';
 import { useBitcoin } from '../context/BitcoinContext';
 
+import { FormattedMessage } from 'react-intl';
+
 
 const SuccessSnackbar = (props) => {
   return (<div
@@ -63,7 +65,7 @@ const Composer = ({ reply_tx, onSuccess }) => {
   const { relayOne } = useRelay()
     const router = useRouter()
     const [twetchPost, setTwetchPost] = useState()
-    const [placeholder, setPlaceholder] = useState("What's the latest?")
+    const [placeholder, setPlaceholder] = useState(<FormattedMessage id="Ask Bitcoin a question"/>)
     const { tag, setTag } = useTuning() 
     const { send, authenticated } = useBitcoin()
     const blankSlateValue = [{ type: "paragraph", children: [{ text: "" }] }];
@@ -75,12 +77,12 @@ const Composer = ({ reply_tx, onSuccess }) => {
 
     useEffect(()=>{
       if(reply_tx){
-        setPlaceholder(`Add your answer`)
+        setPlaceholder(<FormattedMessage id="Add your answer"/>)
       } else {
         switch (tag){
           //case "1F9E9":
             case "question":
-            setPlaceholder("Ask Bitcoin a question")
+            setPlaceholder(<FormattedMessage id="Ask Bitcoin a question"/>)
             break;
           //case "1F4A1":
             case "answer":
@@ -91,7 +93,7 @@ const Composer = ({ reply_tx, onSuccess }) => {
             setPlaceholder("What are you building?")
             break;
           default: 
-            setPlaceholder("What's the latest?")
+            setPlaceholder(<FormattedMessage id="Ask Bitcoin a question"/>)
         }
       }
       
@@ -340,7 +342,7 @@ const Composer = ({ reply_tx, onSuccess }) => {
           disabled={!authenticated || value[0].children[0].text.length === 0}
           className="text-white bg-gradient-to-tr from-blue-500 to-blue-600 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
         >
-          Post<span className='ml-1 hidden sm:block'>$0.02</span>
+          <FormattedMessage id="Post"/><span className='ml-1 hidden sm:block'>$0.02</span>
         </button>
       </div>
     </div>

@@ -21,6 +21,8 @@ import { useTuning } from "../context/TuningContext";
 import { useRouter } from "next/router";
 import { useBitcoin } from "../context/BitcoinContext";
 
+import { FormattedMessage } from 'react-intl';
+
 function ago(period) {
   return moment().subtract(1, period).unix() * 1000;
 }
@@ -92,7 +94,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
                     : "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 font-normal mr-2 cursor-pointer rounded-md whitespace-nowrap"
                 }
               >
-                Questions
+                <FormattedMessage id="Questions"/>
               </div>
               <div
                 //onClick={() => handleChangeTab("1F4A1")}
@@ -104,7 +106,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
                     : "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 font-normal mr-2 cursor-pointer rounded-md whitespace-nowrap"
                 }
               >
-                Answers
+                <FormattedMessage id="Answers"/>
               </div>
               {/* <div
                 //onClick={() => handleChangeTab("1F48E")}
@@ -135,12 +137,12 @@ const Dashboard = ({ data, recent, error, loading }) => {
         <div className="mb-5 sm:hidden px-5">
           <div className='flex items-center'>
             <select value={filter} onChange={handleChange} id="filter" className="ml-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block grow p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="last-hour">Last Hour</option>
-            <option value="last-day">Last Day</option>
-            <option value="last-week">Last Week</option>
-            <option value="last-month">Last Month</option>
-            <option value="last-year">Last Year</option>
-            <option value="all-time">All</option>
+            <option value="last-hour"><FormattedMessage id="Last Hour"/></option>
+            <option value="last-day"><FormattedMessage id="Last Day"/></option>
+            <option value="last-week"><FormattedMessage id="Last Week"/></option>
+            <option value="last-month"><FormattedMessage id="Last Month"/></option>
+            <option value="last-year"><FormattedMessage id="Last Year"/></option>
+            <option value="all-time"><FormattedMessage id="All"/></option>
             </select>
           </div>
         </div>
@@ -171,7 +173,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
             {!loading && recent && (
               <div className="flex py-5 items-center">
                 <div className="grow border border-bottom border-gray-600 dark:border-gray-300" />
-                <div className="mx-5 font-semibold text-gray-600 dark:text-gray-300 text-lg">Recent</div>
+                <div className="mx-5 font-semibold text-gray-600 dark:text-gray-300 text-lg"><FormattedMessage id="Recent"/></div>
                 <div className="grow border border-bottom border-gray-600 dark:border-gray-300" />
               </div>
             )}

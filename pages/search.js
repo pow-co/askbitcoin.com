@@ -3,8 +3,13 @@ import React, { useState, useEffect } from "react";
 import { ThreeColumnLayout, Loader, SimplePostCard } from "../components";
 import { useAPI } from "../hooks/useAPI";
 
+import { FormattedMessage, useIntl } from "react-intl";
+
 const Search = () => {
   const [tag, setTag] = useState("question");
+
+  const intl = useIntl();
+
   const router = useRouter();
   const query = router.query;
   console.log(query);
@@ -55,7 +60,7 @@ const Search = () => {
             <div className="mb-0 flex items-center">
               <input
                 className="rounded-lg bg-gray-100 dark:bg-gray-600 appearance-none border-none focus:outline-none text-gray-900 dark:text-white w-full py-2.5 px-4 text-lg"
-                placeholder="Search"
+                placeholder={intl.formatMessage({ id: "Search" })}
                 id="search-input"
                 autoComplete="off"
                 value={searchText}
@@ -77,7 +82,7 @@ const Search = () => {
                     : "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 font-normal mr-2 cursor-pointer rounded-md whitespace-nowrap"
                 }
               >
-                Questions
+                <FormattedMessage id="Questions" />
               </div>
               <div
                 //onClick={() => handleChangeTab("1F4A1")}
@@ -89,7 +94,7 @@ const Search = () => {
                     : "text-sm leading-4 py-2 px-2 sm:px-3 text-gray-700 dark:text-gray-300 font-normal mr-2 cursor-pointer rounded-md whitespace-nowrap"
                 }
               >
-                Answers
+                <FormattedMessage id="Answers" />
               </div>
             </div>
           </div>
@@ -113,7 +118,7 @@ const Search = () => {
               <div className="flex flex-col justify-center items-center">
                 <p className="text-5xl">gm 🌞</p>
                 <p className="mt-10 text-3xl font-semibold opacity-70">
-                  Nothing to see there ...
+                  <FormattedMessage id="Nothing to see there ..." />
                 </p>
               </div>
             )}

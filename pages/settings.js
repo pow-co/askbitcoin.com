@@ -11,6 +11,9 @@ import { useRelay } from "../context/RelayContext";
 import TuningPanel from "../components/TuningPanel";
 import { useBitcoin } from "../context/BitcoinContext";
 
+import { FormattedMessage } from "react-intl";
+import LocaleSelect from "../components/LocaleSelect";
+
 export default function Settings() {
   const { theme, setTheme } = useTheme();
   const { logout, authenticated } = useBitcoin();
@@ -41,7 +44,7 @@ export default function Settings() {
         <div className="mt-7  p-4  ">
           <div className="bg-gray-100 dark:bg-gray-600 p-5 flex flex-col cursor-pointer my-4 rounded-lg">
             <p className="text-base font-semibold mb-2 text-gray-700 dark:text-white">
-              Tuning Panel
+              <FormattedMessage id="Tuning Panel" />
             </p>
             <TuningPanel />
           </div>
@@ -76,10 +79,10 @@ export default function Settings() {
           <div className="bg-gray-100 dark:bg-gray-600 p-5 flex items-center h-[78px] cursor-pointer my-4 rounded-lg">
             <div className="flex flex-col">
               <p className="text-base font-semibold my-0.5 text-gray-700 dark:text-white">
-                Dark Mode
+                <FormattedMessage id="Dark Mode" />
               </p>
               <p className="text-gray-400 dark:text-gray-300 text-sm tracking-normal	text-left my-0.5">
-                Toggle between dark and light mode
+                <FormattedMessage id="Toggle between dark and light mode" />
               </p>
             </div>
             <div className="grow" />
@@ -99,12 +102,30 @@ export default function Settings() {
               </label>
             </div>
           </div>
+          <div className="bg-gray-100 dark:bg-gray-600 p-5 flex items-center h-[78px] cursor-pointer my-4 rounded-lg">
+            <div className="flex flex-col">
+              <p className="text-base font-semibold my-0.5 text-gray-700 dark:text-white">
+                <FormattedMessage id="Language settings" />
+              </p>
+              <p className="text-gray-400 dark:text-gray-300 text-sm tracking-normal	text-left my-0.5">
+                <FormattedMessage id="Interact with this app in your language" />
+              </p>
+            </div>
+            <div className="grow" />
+            <div className="relative">
+              <label className="flex items-center cursor-pointer">
+                <div className="relative">
+                  <LocaleSelect />
+                </div>
+              </label>
+            </div>
+          </div>
           <button
             disabled={!authenticated}
             onClick={logout}
             className="h-[52px] p-5 flex bg-red-500 text-white text-base font-semibold my-4 w-full border-none rounded-lg cursor-pointer items-center justify-center transition duration-500 transform hover:-translate-y-1 hover:bg-red-600"
           >
-            Log out
+            <FormattedMessage id="Log out" />
           </button>
         </div>
         <div className="grow" />
