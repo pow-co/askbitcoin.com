@@ -28,7 +28,7 @@ function ago(period) {
 const Dashboard = ({ data, recent, error, loading }) => {
   const router = useRouter();
   const { authenticated } = useBitcoin();
-  const { startTimestamp, tag, setTag } = useTuning();
+  const { startTimestamp, tag, setTag, filter,setFilter } = useTuning();
   console.log(data,recent)
 
   const handleChangeTab = (tag) => {
@@ -55,6 +55,11 @@ const Dashboard = ({ data, recent, error, loading }) => {
         console.log("unknown tag");
     }
   };
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setFilter(e.target.value)
+  }
 
   return (
     <ThreeColumnLayout>
@@ -124,6 +129,19 @@ const Dashboard = ({ data, recent, error, loading }) => {
                   Tests 🐛
                 </div> */}
             </div>
+          </div>
+        </div>
+
+        <div className="mb-5 sm:hidden px-5">
+          <div className='flex items-center'>
+            <select value={filter} onChange={handleChange} id="filter" className="ml-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block grow p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="last-hour">Last Hour</option>
+            <option value="last-day">Last Day</option>
+            <option value="last-week">Last Week</option>
+            <option value="last-month">Last Month</option>
+            <option value="last-year">Last Year</option>
+            <option value="all-time">All</option>
+            </select>
           </div>
         </div>
 
