@@ -11,7 +11,13 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
     const { relayOne } = useRelay()
     const { authenticated, exchangeRate } = useBitcoin()
     const [difficulty, setDifficulty] = useState(0.025)
+    const [inputTag, setInputTag] = useState("")
+    const [tag, setTag] = useState("")
     const [price,setPrice] = useState(0.05)
+
+    useEffect(() => {
+      setTag(Buffer.from(inputTag, 'utf8').toString('hex'))
+    },[inputTag])
 
     useEffect(()=>{
         getPriceForDifficulty(difficulty).then((res)=>setPrice(res.toFixed(2)))
@@ -30,25 +36,55 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
       if (!authenticated){
         throw new Error("please, log in!")
       }
-        const stag = wrapRelayx(relayOne)
-        const {txid, txhex, job} = await stag.boost.buy({
-          content: contentTxId,
-          value: 124_000,
-          difficulty: difficulty
-        })
-        relayOne.send({
-          currency: 'BSV',
-          amount: 0.00052,
-          to: '1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ' // askbitcoin.ai revenue address
-        })
-        .then(result => {
-          console.log('relayone.send.reward.result', result)
-        })
-        .catch(error => {
-          console.log('relayone.send.reward.error', error)
-        })
-      
-        return {txid, txhex, job}
+
+      console.log(tag, inputTag) //656475636174696f6e education
+
+      const stag = wrapRelayx(relayOne)
+      const {txid, txhex, job} = await stag.boost.buy({
+        content: contentTxId,
+        value: 124_000,
+        difficulty: difficulty,
+        tag: tag
+      })
+      relayOne.send({
+        currency: 'BSV',
+        amount: 0.00052,
+        to: '1MqPZFc31jUetZ5hxVtG4tijJSugAcSZCQ' // askbitcoin.ai revenue address
+      })
+      .then(result => {
+        console.log('relayone.send.reward.result', result)
+      })
+      .catch(error => {
+        console.log('relayone.send.reward.error', error)
+      })
+    
+      return {txid, txhex, job}
+
+      /* 
+      txid:63fdb97fbc68d896ba57c22892071b4009fe85e8f9c8f43b7d43d9485129f14c
+      txhex:01000000013c390ebf0f498201b6e9558d3735627ced8c9373ec9d65d34fbfb7086400b059020000006a47304402201ecf7cccf805c602e120a694a0d2fca96385d6ae9ba566774c8de35eb41ab54f02205b6e387f256368e8164b44420a8a580ce108fe8396e62b26230c53f59d97377f4121030a094087daa4ff59e49112688a3054670ecdcea3c80eb8b81a4676adcf2cd8e0ffffffff0360e4010000000000ad08626f6f7374706f7775040000000020c7fcac706c95edb1daa6b5b704aa90a2d83f38471391fb9654d00000657cf97a04d8ff271d00048fc9a374007e7c557a766b7e52796b557a8254887e557a8258887e7c7eaa7c6b7e7e7c8254887e6c7e7c8254887eaa01007e816c825488537f7681530121a5696b768100a0691d00000000000000000000000000000000000000000000000000000000007e6c539458959901007e819f6976a96c88ac00000000000000002f006a2231487948587459577947655072485669736e4e645339333156743643716f7555795a0972656c6179782e696f29220000000000001976a914d8c851f9fcc01c53f6c6e62e259b065d2b85b9d688ac00000000
+      job:
+      {
+        "difficulty": 0.025,
+        "profitability": 4960000,
+        "id": "15039",
+        "txid": "63fdb97fbc68d896ba57c22892071b4009fe85e8f9c8f43b7d43d9485129f14c",
+        "content": "7af97c650000d05496fb911347383fd8a290aa04b7b5a6dab1ed956c70acfcc7",
+        "script": "08626f6f7374706f7775040000000020c7fcac706c95edb1daa6b5b704aa90a2d83f38471391fb9654d00000657cf97a04d8ff271d00048fc9a374007e7c557a766b7e52796b557a8254887e557a8258887e7c7eaa7c6b7e7e7c8254887e6c7e7c8254887eaa01007e816c825488537f7681530121a5696b768100a0691d00000000000000000000000000000000000000000000000000000000007e6c539458959901007e819f6976a96c88ac",
+        "vout": 0,
+        "value": 124000,
+        "category": "00000000",
+        "tag": "",
+        "userNonce": "8fc9a374",
+        "additionalData": "",
+        "timestamp": "2022-12-14T17:23:49.000Z",
+        "updatedAt": "2022-12-14T17:23:49.000Z",
+        "createdAt": "2022-12-14T17:23:49.000Z",
+        "tx_hex": null,
+        "spent": false,
+        "spent_txid": null,
+        "spent_vout": null
+       */
         
     }
 
@@ -91,10 +127,14 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
 
     }
 
-    const handleChange = (e) => {
+    const handleChangeDifficulty = (e) => {
         e.preventDefault()
         setDifficulty(e.target.value)
     }
+    const handleChangeTag = (e) => {
+      e.preventDefault()
+      setInputTag(e.target.value)
+  }
   return (
     <div onClick={(e)=> e.stopPropagation()} className='fixed inset-0'>
         <div className='flex flex-col h-screen'>
@@ -122,7 +162,16 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
                         min={0.025}
                         step={0.1}
                         value={difficulty}
-                        onChange={handleChange}
+                        onChange={handleChangeDifficulty}
+                        />
+                        <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
+                        Tag
+                        </div>
+                        <input
+                        className="border border-gray-300 dark:border-gray-700 rounded-l-md text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 py-1 pl-2.5 text-base"
+                        type="text"
+                        value={inputTag}
+                        onChange={handleChangeTag}
                         />
                     </div>
                     <div className='mb-20 sm:mb-0 p-5 flex items-center text-center justify-center'>

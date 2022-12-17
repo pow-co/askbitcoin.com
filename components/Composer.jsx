@@ -309,32 +309,21 @@ const Composer = ({ reply_tx, onSuccess }) => {
         />
       </Slate>
       {twetchPost && <div className='mt-2 border rounded-lg border-gray-300 dark:border-gray-700'><PostCard post={twetchPost}/></div>}
-      <div className="flex items-center mt-2">
-        {/* <>
-          {router.pathname === "/compose" && <div className='rounded-full bg-gray-300 dark:bg-gray-700 py-2 px-4 flex items-center'>
-            <div className="flex items-center mr-2">
-                <input onChange={(e)=>setTag(e.target.value)}  checked={tag === ""} id="problem-tag" type="radio" value="" name="radio-tag" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"/>
-                <label htmlFor="problem-tag" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer"></label>
-            </div> 
-            <div className="flex items-center mr-2">
-                <input onChange={(e)=>setTag(e.target.value)}  checked={tag === "question"} id="problem-tag" type="radio" value="question" name="radio-tag" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"/>
-                <label htmlFor="problem-tag" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">🧩</label>
-            </div>
-            <div className="flex items-center mr-2">
-                <input onChange={(e)=>setTag(e.target.value)} checked={tag === "answer" } id="idea-tag" type="radio" value="answer" name="radio-tag" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"/>
-                <label htmlFor="idea-tag" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">💡</label>
-            </div>
-            <div className="flex items-center">
-                <input onChange={(e)=>setTag(e.target.value)} checked={tag === "project"} id="project-tag" type="radio" value="project" name="radio-tag" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"/>
-                <label htmlFor="project-tag" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">💎</label>
-            </div>
-            <div className="ml-2 flex items-center">
-                <input onChange={(e)=>setTag(e.target.value)} checked={tag === "test"} id="test-tag" type="radio" value="test" name="radio-tag" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"/>
-                <label htmlFor="project-tag" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">🐛</label>
-            </div> 
-          </div>}
-         </> */}
-        <div className='grow'/>
+      <div className="flex items-center mt-2 justify-between">
+        <div className='flex relative items-center cursor-pointer'>
+          <div className={`animate-ping absolute left-[18px] min-h-[33px] min-w-[33px] rounded-full bg-blue-200`}></div>
+          <div className={`animate-ping  delay-75 absolute left-[24px] min-h-[22px] min-w-[22px] rounded-full bg-blue-400`}></div>
+          <div className={`animate-ping  delay-100 absolute left-[29px] min-h-[11px] min-w-[11px] rounded-full bg-blue-600`}></div>
+          <svg viewBox='0 0 65 65' className='relative min-h-[69px] min-w-[69px] stroke-1 stroke-gray-500 dark:stroke-gray-300 rounded-full '>
+              <path
+                  d="M40.1719 32.6561C40.1719 35.6054 38.5079 38.1645 36.0692 39.4499C35.002 40.0122 33.7855 36.2423 32.4945 36.2423C31.1288 36.2423 29.8492 40.0696 28.7418 39.4499C26.4007 38.1359 24.8228 35.5308 24.8228 32.6561C24.8228 28.4214 28.2598 24.9844 32.4945 24.9844C36.7291 24.9844 40.1719 28.4157 40.1719 32.6561Z"
+                  className='stroke-gray-500 dark:stroke-gray-300 group-hover:stroke-blue-500'
+                  fill='transparent'
+              ></path>
+          </svg>
+
+        </div>
+        
         <button
           onClick={handlePost}
           disabled={!authenticated || value[0].children[0].text.length === 0}
