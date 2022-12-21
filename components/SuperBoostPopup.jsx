@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { toast } from 'react-toastify'
 
 import { wrapRelayx } from 'stag-relayx'
@@ -126,7 +127,7 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
                     </div>
                     <div className='grow flex flex-col justify-center items-center'>
                         <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
-                        Custom difficulty
+                        <FormattedMessage id="Custom Difficulty"/>
                         </div>
                         <input
                         className="border border-gray-300 dark:border-gray-700 rounded-l-md text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 py-1 pl-2.5 text-base"
@@ -138,7 +139,7 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
                         onChange={handleChangeDifficulty}
                         />
                         <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-r-md py-1 pr-2.5">
-                        Tag
+                        <FormattedMessage id="Tag"/>
                         </div>
                         <input
                         className="border border-gray-300 dark:border-gray-700 rounded-l-md text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 py-1 pl-2.5 text-base"

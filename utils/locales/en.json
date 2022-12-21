@@ -28,5 +28,9 @@
     "Connect": "Connect",
     "Connect wallet": "Connect wallet",
     "Language settings": "Language settings",
-    "Interact with this app in your language": "Interact with this app in your language"
+    "Interact with this app in your language": "Interact with this app in your language",
+    "Difficulty": "Difficulty",
+    "Custom Difficulty": "Custom Difficulty",
+    "Tag": "Tag"
+
 }

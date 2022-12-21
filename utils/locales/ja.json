@@ -28,5 +28,8 @@
     "Connect": "接続する",
     "Connect wallet": "財布を接続する",
     "Language settings": "言語設定",
-    "Interact with this app in your language": "あなたの言語でこのアプリと対話する"
+    "Interact with this app in your language": "あなたの言語でこのアプリと対話する",
+    "Difficulty": "難しさ",
+    "Custom Difficulty": "カスタム難しさ",
+    "Tag": "タグ"
     }
