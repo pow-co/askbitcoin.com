@@ -2,6 +2,8 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useTuning } from '../context/TuningContext'
 
+import { FormattedMessage } from 'react-intl';
+
 const TuningPanel = ({ closeAction }) => {
     const { filter, setFilter, zenMode, setZenMode } = useTuning()
 
@@ -23,18 +25,18 @@ const TuningPanel = ({ closeAction }) => {
   return (
     <div className='flex flex-col'>
       <div className='flex items-center w-full'>
-          <label htmlFor="filter" className="text-sm font-medium text-gray-700 dark:text-gray-200">filter:</label>
+          <label htmlFor="filter" className="text-sm font-medium text-gray-700 dark:text-gray-200"><FormattedMessage id="filter"/>:</label>
           <select value={filter} onChange={handleChange} id="filter" className="ml-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block grow p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option value="last-hour">Last Hour</option>
-          <option value="last-day">Last Day</option>
-          <option value="last-week">Last Week</option>
-          <option value="last-month">Last Month</option>
-          <option value="last-year">Last Year</option>
-          <option value="all-time">All</option>
+            <option value="last-hour"><FormattedMessage id="Last Hour"/></option>
+            <option value="last-day"><FormattedMessage id="Last Day"/></option>
+            <option value="last-week"><FormattedMessage id="Last Week"/></option>
+            <option value="last-month"><FormattedMessage id="Last Month"/></option>
+            <option value="last-year"><FormattedMessage id="Last Year"/></option>
+            <option value="all-time"><FormattedMessage id="All"/></option>
           </select>
       </div>
       <div className='py-5 flex items-center w-full cursor-pointer'>
-          <label htmlFor="zenMode" className="text-sm font-medium text-gray-700 dark:text-gray-200">Zen Mode:</label>
+          <label htmlFor="zenMode" className="text-sm font-medium text-gray-700 dark:text-gray-200"><FormattedMessage id="Zen Mode"/>:</label>
           <div className="relative ml-5">
           <label className="inline-flex relative items-center cursor-pointer">
           <input type="checkbox" onChange={toggleZen} value={zenMode} checked={zenMode} className="sr-only peer"/>

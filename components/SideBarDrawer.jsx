@@ -5,6 +5,9 @@ import { useRelay } from '../context/RelayContext';
 import { UserIcon, WalletProviderPopUp, Drawer } from '.';
 import LogoTitle from './LogoTitle';
 import { useBitcoin } from '../context/BitcoinContext';
+import LocaleSelect from './LocaleSelect';
+
+import { FormattedMessage } from 'react-intl';
 
 
 const SideBarDrawer = () => {
@@ -65,7 +68,7 @@ const SideBarDrawer = () => {
                         <path d="M2.16197 13.2675H13.838C15.2698 13.2675 16 12.5445 16 11.1271V2.86576C16 1.45546 15.2698 0.732422 13.838 0.732422H2.16197C0.730201 0.732422 0 1.44831 0 2.86576V11.1271C0 12.5445 0.730201 13.2675 2.16197 13.2675ZM1.18121 2.9445C1.18121 2.25725 1.54631 1.91363 2.20492 1.91363H13.7951C14.4465 1.91363 14.8188 2.25725 14.8188 2.9445V3.9539H1.18121V2.9445ZM2.20492 12.0863C1.54631 12.0863 1.18121 11.7356 1.18121 11.0483V5.50737H14.8188V11.0483C14.8188 11.7356 14.4465 12.0863 13.7951 12.0863H2.20492Z" fill="white">
                         </path>
                         </svg>
-                    <span className='ml-4'>Connect</span>
+                    <span className='ml-4'><FormattedMessage id="Connect"/></span>
                 </div>
                 </div>
             )}
@@ -75,7 +78,7 @@ const SideBarDrawer = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
-                        <div className='text-base leading-4 grow'>Home</div>
+                        <div className='text-base leading-4 grow'><FormattedMessage id="Home"/></div>
                     </div>
                 </Link>
                 {/* <Link href="/notifications">
@@ -109,7 +112,7 @@ const SideBarDrawer = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <div className='text-base leading-4 grow'>Market</div>
+                        <div className='text-base leading-4 grow'><FormattedMessage id="Market"/></div>
                     </div>
                 </Link>
                 {/* <Link href="/discover">
@@ -144,23 +147,26 @@ const SideBarDrawer = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <div className='text-base leading-4 grow'>Settings</div>
+                        <div className='text-base leading-4 grow'><FormattedMessage id="Settings"/></div>
                     </div>
                 </Link>
             </div>
             <div className='grow'/>
-            <div onClick={toggleTheme} className='flex w-full px-6 justify-start'>
-                <svg 
-                    className={`cursor-pointer ${theme ==="dark" ? "fill-gray-500 hover:fill-gray-100":"fill-gray-500 hover:fill-gray-700"}`}
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 19 19" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path d="M14.8976 12.8327C9.68779 12.8327 6.3558 9.58619 6.3558 4.39567C6.3558 3.32308 6.61581 1.79083 6.96249 0.995968C7.04916 0.775706 7.06842 0.641633 7.06842 0.545867C7.06842 0.287298 6.87582 0 6.50025 0C6.39432 0 6.1632 0.0287298 5.95134 0.105343C2.38824 1.52268 0 5.33417 0 9.34677C0 14.9778 4.31424 19 9.95743 19C14.108 19 17.6999 16.5005 18.8941 13.3785C18.9807 13.1583 19 12.9284 19 12.8422C19 12.4879 18.7015 12.2485 18.4318 12.2485C18.3066 12.2485 18.2007 12.2772 18.0177 12.3347C17.2762 12.5741 16.0821 12.8327 14.8976 12.8327Z">
-                    </path>
-                </svg>
+            <div className='flex items-center justify-between'>
+                <div onClick={toggleTheme} className='flex w-full px-6 justify-start'>
+                    <svg 
+                        className={`cursor-pointer ${theme ==="dark" ? "fill-gray-500 hover:fill-gray-100":"fill-gray-500 hover:fill-gray-700"}`}
+                        width="16" 
+                        height="16" 
+                        viewBox="0 0 19 19" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M14.8976 12.8327C9.68779 12.8327 6.3558 9.58619 6.3558 4.39567C6.3558 3.32308 6.61581 1.79083 6.96249 0.995968C7.04916 0.775706 7.06842 0.641633 7.06842 0.545867C7.06842 0.287298 6.87582 0 6.50025 0C6.39432 0 6.1632 0.0287298 5.95134 0.105343C2.38824 1.52268 0 5.33417 0 9.34677C0 14.9778 4.31424 19 9.95743 19C14.108 19 17.6999 16.5005 18.8941 13.3785C18.9807 13.1583 19 12.9284 19 12.8422C19 12.4879 18.7015 12.2485 18.4318 12.2485C18.3066 12.2485 18.2007 12.2772 18.0177 12.3347C17.2762 12.5741 16.0821 12.8327 14.8976 12.8327Z">
+                        </path>
+                    </svg>
+                </div>
+                <LocaleSelect/>
             </div>
             {authenticated && <div className='flex w-full px-6 justify-start mt-6'>
                 {/* <Link href="/invite">

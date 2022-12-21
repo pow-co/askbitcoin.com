@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { TwetchProvider } from "../context/TwetchContext";
 import { BitcoinProvider } from "../context/BitcoinContext";
 import Head from "next/head";
+import Locales from "../context/LocalContext";
 
 function MyApp({ Component, pageProps }) {
   /*  const [loading, setLoading] = useState(false);
@@ -45,7 +46,9 @@ function MyApp({ Component, pageProps }) {
           <RelayProvider>
             <BitcoinProvider>
               <TuneProvider>
-                <Component {...pageProps} />
+                <Locales>
+                  <Component {...pageProps} />
+                </Locales>
               </TuneProvider>
             </BitcoinProvider>
           </RelayProvider>
