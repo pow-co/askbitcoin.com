@@ -22,6 +22,7 @@ jobs:
       - run:
           name: Deploy to Web Servers
           command: |
+            mkdir ~/.ssh && touch ~/.ssh/known_hosts
             echo 'askbitcoin.ai ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOed9xWurUoTT+vTe90SDfnAUfg83GCaO8tcxg04wcH2Z+YQUH8su4OzSdXuNvI5lS1CkJqvyaXehNFa0+eMfpc=' >> ~/.ssh/known_hosts
             ssh root@askbitcoin.ai "chef-client -o recipe[askbitcoin.ai]"
 
