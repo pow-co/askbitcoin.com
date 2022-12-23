@@ -4,8 +4,34 @@ import { ThreeColumnLayout, Loader, SimplePostCard } from "../components";
 import { useAPI } from "../hooks/useAPI";
 
 import { FormattedMessage, useIntl } from "react-intl";
+import { useRelay } from "../context/RelayContext";
 
 const Search = () => {
+  const { tokenBalance } = useRelay();
+
+  if (tokenBalance === 0) {
+    return (
+      <ThreeColumnLayout>
+        <div className="col-span-12 lg:col-span-6 min-h-screen">
+          <div className="mt-8 flex flex-col justify-center text-center">
+            <p className="text-5xl p-5">😔 ngmi</p>
+            <p className="text-xl opacity-70 p-5 ">
+              <FormattedMessage id="We reserve ability to search askbitcoin to our token holders." />
+            </p>
+            <div className="flex flex-col mx-auto justify-center">
+              <button className="mt-2 text-white bg-gradient-to-tr from-blue-500 to-blue-600 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1">
+                <FormattedMessage id="Go buy one now!" />
+              </button>
+              <button className="mt-5 text-white outline outline-2 outline-blue-500 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1">
+                <FormattedMessage id="No, I hate knowledge." />
+              </button>
+            </div>
+          </div>
+        </div>
+      </ThreeColumnLayout>
+    );
+  }
+
   const [tag, setTag] = useState("question");
 
   const intl = useIntl();

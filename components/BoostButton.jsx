@@ -63,8 +63,8 @@ const boost = async (contentTxid) => {
   const stag = wrapRelayx(relayOne)
   const {txid, txhex, job} = await stag.boost.buy({
     content: contentTxid,
-    value: 124_000,
-    difficulty: 0.025
+    difficulty: 0.025,
+    value: 124000,
   })
   relayOne.send({
     currency: 'BSV',
@@ -84,7 +84,9 @@ const boost = async (contentTxid) => {
 
 
 
-const handleBoost = async () => {
+const handleBoost = async (e) => {
+  e.preventDefault()
+  e.stopPropagation()
   
 
 

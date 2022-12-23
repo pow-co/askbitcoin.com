@@ -1,3 +1,4 @@
+import axios from "axios";
 import Script from "next/script";
 import React, {
   useCallback,
@@ -86,6 +87,10 @@ const RelayProvider = (props) => {
   const [relayOne, setRelayOne] = useState();
   const [relayOtc, setRelayOtc] = useState();
   const [runOwner, setRunOwner] = useLocalStorage(runOwnerStorageKey);
+  const [tokenBalance, setTokenBalance] = useState(0);
+
+  const token_contract =
+    "851841ac65cdc11642437f32e1c5f645150590045ee9bbf7106bfc64ebf9766b_o2";
 
   const [ready, setReady] = useState(false);
 
@@ -96,6 +101,24 @@ const RelayProvider = (props) => {
       setReady(true);
     }
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(
+        `https://staging-backend.relayx.com/api/token/${token_contract}/owners`
+      );
+
+      const [owner] = data.data.owners.filter((owner) => {
+        return owner.paymail === relayPaymail;
+      });
+
+      if (relayPaymail && owner?.amount) {
+        setTokenBalance(owner?.amount);
+      } else {
+        setTokenBalance(0);
+      }
+    })();
+  }, [relayPaymail]);
 
   const isApp = useMemo(
     () => (relayOne && relayOne.isApp()) || false,
@@ -167,6 +190,7 @@ const RelayProvider = (props) => {
       relaySend,
       relayLogout,
       ready,
+      tokenBalance,
       isApp,
       runOwner,
     }),
@@ -179,6 +203,7 @@ const RelayProvider = (props) => {
       relaySend,
       relayLogout,
       ready,
+      tokenBalance,
       isApp,
       runOwner,
     ]

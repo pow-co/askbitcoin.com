@@ -18,7 +18,7 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
 
     useEffect(()=>{
         getPriceForDifficulty(difficulty).then((res)=>{
-          setValue(res.satoshis)
+          setValue(res.satoshis * 1e-8)
           setPrice(res.price.toFixed(2))
         })
     },[difficulty])
