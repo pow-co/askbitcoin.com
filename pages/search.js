@@ -65,10 +65,16 @@ const Search = () => {
               <FormattedMessage id="We reserve ability to search askbitcoin to our token holders." />
             </p>
             <div className="flex flex-col mx-auto justify-center">
-              <button className="mt-2 text-white bg-gradient-to-tr from-blue-500 to-blue-600 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1">
+              <button
+                onClick={() => router.push("/market")}
+                className="mt-2 text-white bg-gradient-to-tr from-blue-500 to-blue-600 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
+              >
                 <FormattedMessage id="Go buy one now!" />
               </button>
-              <button className="mt-5 text-white outline outline-2 outline-blue-500 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1">
+              <button
+                onClick={() => router.push("/")}
+                className="mt-5 text-white outline outline-2 outline-blue-500 leading-6 py-1 px-4 font-bold border-none rounded cursor-pointer flex items-center text-center justify-center disabled:opacity-50 transition duration-500 transform hover:-translate-y-1"
+              >
                 <FormattedMessage id="No, I hate knowledge." />
               </button>
             </div>
