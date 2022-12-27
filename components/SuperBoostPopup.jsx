@@ -18,7 +18,7 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
 
     useEffect(()=>{
         getPriceForDifficulty(difficulty).then((res)=>{
-          setValue(res.satoshis * 1e-8)
+          setValue(res.satoshis)
           setPrice(res.price.toFixed(2))
         })
     },[difficulty])
@@ -40,6 +40,14 @@ const SuperBoostPopup = ({ contentTxId, onClose }) => {
 
 
       const stag = wrapRelayx(relayOne)
+
+      console.log({
+        content: contentTxId,
+        value: value,
+        difficulty: difficulty,
+        tag: tag
+      })
+
       const {txid, txhex, job} = await stag.boost.buy({
         content: contentTxId,
         value: value,
