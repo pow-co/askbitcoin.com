@@ -1,12 +1,27 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { useBitcoin } from '../context/BitcoinContext'
 const Header = dynamic(() => import('./Header'), { ssr: false})
 const SideBar = dynamic(() => import ('./SideBar'), { ssr: false })
 const SidebarTuning = dynamic(() => import('./SidebarTuning'), { ssr: false })
 
 const ThreeColumnLayout = ({ children }) => {
+  const { authenticated } = useBitcoin()
+
+  const ToastTroubleShoot = () => {
+    return (
+      <div className="fixed bottom-0 left-0 right-0 flex items-center justify-center p-4 z-[1000]">
+        <div className="bg-orange-500 text-white p-4 rounded-md">
+          <p className='text-white'>Have trouble login in? <Link href="/questions/08b40f405f9575e5b1d5489b7f5fe8353645f74816371214c3997aad3f4e1d6d"><a className='ml-2 underline'>Troubleshoot</a></Link></p> 
+        </div>
+      </div>
+    )
+  };
+
   return (
     <div className='bg-gray-300 dark:bg-gray-700'>
+      {!authenticated && <ToastTroubleShoot/>}
       <Header/>
       <div className='h-16'/>
       <div className='grid grid-cols-12'>
