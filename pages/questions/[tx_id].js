@@ -51,7 +51,7 @@ export default function DetailPage() {
     );
   }
 
-  const { question } = data;
+  const { question, difficulty } = data;
 
   var { answers } = question;
 
@@ -85,7 +85,7 @@ export default function DetailPage() {
         </svg>
         <div className="mt-4 lg:mt-10">
           {loading && <Loader />}
-          {!loading && !error && <DetailPostCard post={question} />}
+          {!loading && !error && <DetailPostCard post={question} difficulty={difficulty}/>}
           {!loading && !error && (
             <div className="bg-gray-100 dark:bg-gray-600 rounded-b-lg py-3 px-4 mb-1">
               <Composer reply_tx={query.tx_id} />

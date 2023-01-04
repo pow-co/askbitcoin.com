@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { useTuning } from '../context/TuningContext'
 
 
-const DetailPostCard = ({ post }) => {
+const DetailPostCard = ({ post, difficulty }) => {
     const router = useRouter();
 
     const { zenMode } = useTuning();
@@ -99,7 +99,7 @@ const DetailPostCard = ({ post }) => {
                         {post.answers !== undefined && post.answers.length}
                       </p>}
                   </div>
-                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : 0} zenMode={zenMode}/>
+                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : difficulty || 0} zenMode={zenMode}/>
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"
