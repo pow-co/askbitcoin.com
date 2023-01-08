@@ -10,3 +10,7 @@
     background-color: #085af6;
   }
 }
+
+a.linkify-hover:hover {
+  text-decoration: underline;
+}
