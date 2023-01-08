@@ -8,6 +8,8 @@ import BoostButton from './BoostButton'
 import { useEffect } from 'react'
 import { useTuning } from '../context/TuningContext'
 
+import Linkify from "linkify-react";
+
 
 const DetailPostCard = ({ post, difficulty }) => {
     const router = useRouter();
@@ -75,10 +77,10 @@ const DetailPostCard = ({ post, difficulty }) => {
                   router.push(`/questions/${post.question.tx_id}`)
                 }} className='cursor-pointer relative flex flex-col bg-gray-300 dark:bg-gray-700 m-4 p-4 border-l-4 border-gray-500 '>
                   <span className='w-9 h-9 flex items-center justify-center text-center absolute -top-4 -left-4 rounded-full bg-gray-100 dark:bg-gray-600'>🧩</span>
-                  <PostDescription bContent={post.question.content}/>
+                  <Linkify><PostDescription bContent={post.question.content}/></Linkify>
                 </div>
               )}
-              <PostDescription bContent={post.content}/>
+              <Linkify><PostDescription bContent={post.content}/></Linkify>
               {/* <PostMedia files={JSON.parse(post.files)}/> */}
               <div className='ml-1'>
                 <div className='flex w-full px-16'>
