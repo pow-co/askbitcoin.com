@@ -21,7 +21,6 @@ const ThreeColumnLayout = ({ children }) => {
 
   return (
     <div className='bg-gray-300 dark:bg-gray-700'>
-      {!authenticated && <ToastTroubleShoot/>}
       <Header/>
       <div className='h-16'/>
       <div className='grid grid-cols-12'>

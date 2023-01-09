@@ -42,7 +42,7 @@ const SimplePostCard = ({ post }) => {
                 </a>
               </Link> */}
                 <a>
-                  <UserIcon src={`https://bitpic.network/u/0`} size={46} />
+                  <UserIcon src={`https://a.relayx.com/u/anon@relayx.com`} size={46} />
                 </a>
               </div>
             )}

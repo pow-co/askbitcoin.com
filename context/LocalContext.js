@@ -34,7 +34,6 @@ const Locales = ({ children }) => {
 
   useEffect(() => {
     loadLocaleData(locale).then((d) => {
-      console.log(d.default);
       setMessages(d.default);
     });
   }, [locale]);
