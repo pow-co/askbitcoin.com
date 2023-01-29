@@ -30,7 +30,7 @@ function ago(period) {
 const Dashboard = ({ data, recent, error, loading }) => {
   const router = useRouter();
   const { authenticated } = useBitcoin();
-  const { startTimestamp, tag, setTag, filter,setFilter } = useTuning();
+  const { startTimestamp, tag, setTag, filter,setFilter, zenMode } = useTuning();
   console.log(data,recent)
 
   const handleChangeTab = (tag) => {
@@ -147,7 +147,7 @@ const Dashboard = ({ data, recent, error, loading }) => {
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full pb-[200px]">
           <div className="relative">
             {/* <InfiniteScroll
                 dataLength={posts.length}
@@ -170,14 +170,14 @@ const Dashboard = ({ data, recent, error, loading }) => {
                 }
               })}
             {loading && <Loader />}
-            {!loading && recent && (
+            {!zenMode && !loading && recent && (
               <div className="flex py-5 items-center">
                 <div className="grow border border-bottom border-gray-600 dark:border-gray-300" />
                 <div className="mx-5 font-semibold text-gray-600 dark:text-gray-300 text-lg"><FormattedMessage id="Recent"/></div>
                 <div className="grow border border-bottom border-gray-600 dark:border-gray-300" />
               </div>
             )}
-            {recent?.map((post) => (
+            {!zenMode && recent?.map((post) => (
               <SimplePostCard key={post.tx_id} post={post} />
             ))}
             {/* {!recentLoading &&
