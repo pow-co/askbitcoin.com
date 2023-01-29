@@ -4,14 +4,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import moment from "moment";
 import likeTwetch from "../services/twetch/like-twetch";
-import BoostButton from "./BoostButton";
+import { BoostButton } from "myboostpow-lib";
 import { useEffect } from "react";
 import { useTuning } from "../context/TuningContext";
+import { toast } from 'react-hot-toast';
+
 
 import Linkify from "linkify-react";
+import { useTheme } from "next-themes";
 
 const SimplePostCard = ({ post }) => {
   const router = useRouter();
+  const theme = useTheme()
   const { zenMode } = useTuning();
 
   const navigate = (e) => {
@@ -21,6 +25,39 @@ const SimplePostCard = ({ post }) => {
     } else {
       router.push(`/answers/${post.tx_id}`);
     }
+  };
+
+  const handleBoostLoading = () => {
+    toast('Publishing Your Boost Job to the Network', {
+        icon: '⛏️',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+      });
+  };
+
+  const handleBoostSuccess = () => {
+    toast('Success!', {
+        icon: '✅',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+      });
+  };
+
+  const handleBoostError = () => {
+    toast('Error!', {
+        icon: '🐛',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+    });
   };
 
   const handleLike = (e) => {};
@@ -113,12 +150,15 @@ const SimplePostCard = ({ post }) => {
                     </p>}
                   </div>
                   <BoostButton
-                    tx_id={post.tx_id}
-                    difficulty={
-                      post.difficulty !== undefined ? post.difficulty : 0
-                    }
-                    zenMode={zenMode}
-                  />
+                      content={post.tx_id}
+                      difficulty={post.difficulty !== undefined ? post.difficulty : 0}
+                      //@ts-ignore
+                      theme={theme.theme}
+                      showDifficulty={!zenMode}
+                      onSending={handleBoostLoading}
+                      onError={handleBoostError}
+                      onSuccess={handleBoostSuccess}
+                    />
                 </div>
               </div>
             </div>

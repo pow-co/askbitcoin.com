@@ -4,15 +4,17 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import likeTwetch from '../services/twetch/like-twetch'
-import BoostButton from './BoostButton'
+import { BoostButton } from 'myboostpow-lib'
 import { useEffect } from 'react'
 import { useTuning } from '../context/TuningContext'
+import { useTheme } from 'next-themes'
 
 import Linkify from "linkify-react";
 
 
 const DetailPostCard = ({ post, difficulty }) => {
     const router = useRouter();
+    const theme = useTheme(); 
 
     const { zenMode } = useTuning();
 
@@ -24,6 +26,39 @@ const DetailPostCard = ({ post, difficulty }) => {
       router.push(`/answers/${post.tx_id}`)
     }
   } 
+
+  const handleBoostLoading = () => {
+    toast('Publishing Your Boost Job to the Network', {
+        icon: '⛏️',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+      });
+  };
+
+  const handleBoostSuccess = () => {
+    toast('Success!', {
+        icon: '✅',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+      });
+  };
+
+  const handleBoostError = () => {
+    toast('Error!', {
+        icon: '🐛',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+    });
+  };
 
   const handleLike = (e) => {
 
@@ -101,7 +136,16 @@ const DetailPostCard = ({ post, difficulty }) => {
                         {post.answers !== undefined && post.answers.length}
                       </p>}
                   </div>
-                  <BoostButton tx_id={post.tx_id} difficulty={post.difficulty !== undefined ? post.difficulty : difficulty || 0} zenMode={zenMode}/>
+                  <BoostButton
+                    content={post.tx_id}
+                    difficulty={post.difficulty !== undefined ? post.difficulty : 0}
+                    //@ts-ignore
+                    theme={theme.theme}
+                    showDifficulty={!zenMode}
+                    onSending={handleBoostLoading}
+                    onError={handleBoostError}
+                    onSuccess={handleBoostSuccess}
+                  />
                   {/* <div className='col-span-3 flex group items-center w-fit relative'>
                     <svg
                       viewBox="0 0 40 40"

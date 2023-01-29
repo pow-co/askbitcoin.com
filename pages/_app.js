@@ -12,6 +12,7 @@ import { TwetchProvider } from "../context/TwetchContext";
 import { BitcoinProvider } from "../context/BitcoinContext";
 import Head from "next/head";
 import Locales from "../context/LocalContext";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }) {
   /*  const [loading, setLoading] = useState(false);
@@ -48,6 +49,7 @@ function MyApp({ Component, pageProps }) {
               <TuneProvider>
                 <Locales>
                   <Component {...pageProps} />
+                  <Toaster />
                 </Locales>
               </TuneProvider>
             </BitcoinProvider>

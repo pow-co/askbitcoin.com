@@ -1,50 +1,52 @@
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import React from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { useRelay } from '../context/RelayContext'
-import BoostButton from './BoostButton'
-
-
-const SuccessSnackbar = (props) => {
-    return (<div
-      className="mx-2 sm:mx-auto max-w-sm  flex flex-row items-center justify-between bg-green-200 p-3 text-sm leading-none font-medium rounded-xl whitespace-no-wrap">
-      <div className="inline-flex items-center text-green-500">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            clipRule="evenodd" />
-        </svg>
-        1 token bought
-      </div>
-      <div className="text-green-700 cursor-pointer hover:text-green-800">
-        <a target="_blank" rel="noreferrer" href={`https://whatsonchain.com/tx/${props.tx_id}`}>View</a>
-      </div>
-    </div>)
-  }
-  
-  const ErrorSnackbar = (props) => {
-    return (
-      <div
-        className="mx-2 sm:mx-auto max-w-sm  flex flex-row items-center justify-between bg-red-200 p-3 text-sm leading-none font-medium rounded-xl whitespace-no-wrap">
-        <div className="inline-flex items-center text-red-500">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-              clipRule="evenodd" />
-          </svg>
-          {props.message}
-        </div>
-      </div>
-    )
-  }
+import { BoostButton } from 'myboostpow-lib'
+import { useTheme } from 'next-themes'
 
 const MarketItem = ({item, token}) => {
     const router = useRouter()
+    const theme = useTheme()
     const { relayOne } = useRelay()
     if (!item.satoshis){ // not for sale = do not display todo
         return <></>
     }
+
+    const handleBoostLoading = () => {
+      toast('Publishing Your Boost Job to the Network', {
+          icon: '⛏️',
+          style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+          },
+        });
+    };
+  
+    const handleBoostSuccess = () => {
+      toast('Success!', {
+          icon: '✅',
+          style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+          },
+        });
+    };
+  
+    const handleBoostError = () => {
+      toast('Error!', {
+          icon: '🐛',
+          style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+          },
+      });
+    };
+
 
     const handleBuy = async (e) => {
         e.preventDefault()
@@ -125,7 +127,16 @@ const MarketItem = ({item, token}) => {
                 Buy
                 </button>
                 <div className='cursor-pointer'>
-                    <BoostButton tx_id={item.txid} zenMode={true} difficulty={0}/>
+                    <BoostButton
+                      content={item.txid}
+                      difficulty={0}
+                      //@ts-ignore
+                      theme={theme.theme}
+                      showDifficulty={false}
+                      onSending={handleBoostLoading}
+                      onError={handleBoostError}
+                      onSuccess={handleBoostSuccess}
+                    />
                 </div>
             </div>
         </div>
