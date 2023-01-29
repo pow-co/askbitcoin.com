@@ -47,34 +47,50 @@ const MarketItem = ({item, token}) => {
       });
     };
 
+    const handleBuyLoading = () => {
+        toast('Publishing Your Buy Order to the Network', {
+            icon: '⛏️',
+            style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            },
+          });
+      };
+    
+      const handleBuySuccess = () => {
+        toast('Success!', {
+            icon: '✅',
+            style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            },
+          });
+      };
+    
+      const handleBuyError = () => {
+        toast('Error!', {
+            icon: '🐛',
+            style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            },
+        });
+      };
+
 
     const handleBuy = async (e) => {
         e.preventDefault()
-        const resp = await toast.promise(buyItem(item), {
-            pending: 'Transaction is pending 🚀',
-            success: {
-            render({data}){
-                return <SuccessSnackbar tx_id={data.txid}/>
-            },
-            icon:false
-            },
-            error: {
-            render({data}){
-                return <ErrorSnackbar message={data.message}/>
-            },
-            icon:false
-            }
-        }, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        closeButton: false,
-        theme: "light",
-        })
+        handleBuyLoading()
+        try {
+            const resp = await buyItem(item)
+            handleBuySuccess()
+        } catch (error) {
+            console.log(error)
+            handleBuyError()
+        }
 
     }
 
