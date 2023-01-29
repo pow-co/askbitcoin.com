@@ -146,7 +146,7 @@ const SimplePostCard = ({ post }) => {
                       ></path>
                     </svg>
                     <p className="text-gray-500 dark:text-gray-300 group-hover:text-green-500">
-                      {post.answers !== undefined && post.answers.length}
+                      {post.answers?.length || 0}
                     </p>
                   </div>
                   <BoostButton
