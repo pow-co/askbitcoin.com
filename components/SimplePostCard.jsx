@@ -67,7 +67,7 @@ const SimplePostCard = ({ post }) => {
     return (
       <div
         onClick={navigate}
-        className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:sm:bg-gray-200 hover:dark:sm:bg-gray-500 mt-0.5 first:rounded-t-lg"
+        className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:sm:bg-gray-200 hover:dark:sm:bg-gray-500 mt-0.5 first:sm:rounded-t-lg last:sm:rounded-b-lg"
       >
         <div className="col-span-12">
           <div className="mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer">
