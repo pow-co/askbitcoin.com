@@ -3,7 +3,7 @@ import axios from 'axios'
 import React from 'react'
 import { toast } from 'react-hot-toast'
 import { useRelay } from '../context/RelayContext'
-import { BoostButton } from 'myboostpow-lib'
+import { BoostButton } from 'boostpow-button'
 import { useTheme } from 'next-themes'
 
 const MarketItem = ({item, token}) => {
