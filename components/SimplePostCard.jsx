@@ -151,6 +151,7 @@ const SimplePostCard = ({ post }) => {
                   </div>
                   <BoostButton
                       content={post.tx_id}
+                      wallet="relayx"
                       difficulty={post.difficulty !== undefined ? post.difficulty : 0}
                       //@ts-ignore
                       theme={theme.theme}
